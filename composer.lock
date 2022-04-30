@@ -7,57 +7,61 @@
     "content-hash": "ba7f527615dd232d050c86217c8ec64d",
     "packages": [
         {
-            "name": "ezyang/htmlpurifier",
-            "version": "v4.10.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "d85d39da4576a6934b72480be6978fb10c860021"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/d85d39da4576a6934b72480be6978fb10c860021",
-                "reference": "d85d39da4576a6934b72480be6978fb10c860021",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
+          "name": "ezyang/htmlpurifier",
+          "version": "v4.14.0",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/ezyang/htmlpurifier.git",
+            "reference": "12ab42bd6e742c70c0a52f7b82477fcd44e64b75"
+          },
+          "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/12ab42bd6e742c70c0a52f7b82477fcd44e64b75",
+            "reference": "12ab42bd6e742c70c0a52f7b82477fcd44e64b75",
+            "shasum": "",
+            "mirrors": [
+              {
+                "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                "preferred": true
+              }
+            ]
+          },
             "require": {
                 "php": ">=5.2"
             },
-            "require-dev": {
-                "simpletest/simpletest": "^1.1"
-            },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "HTMLPurifier": "library/"
-                },
-                "files": [
-                    "library/HTMLPurifier.composer.php"
-                ]
+              "files": [
+                "library/HTMLPurifier.composer.php"
+              ],
+              "psr-0": {
+                "HTMLPurifier": "library/"
+              },
+              "exclude-from-classmap": [
+                "/library/HTMLPurifier/Language/"
+              ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL"
+              "LGPL-2.1-or-later"
             ],
             "authors": [
                 {
-                    "name": "Edward Z. Yang",
-                    "email": "admin@htmlpurifier.org",
-                    "homepage": "http://ezyang.com"
+                  "name": "Edward Z. Yang",
+                  "email": "admin@htmlpurifier.org",
+                  "homepage": "http://ezyang.com"
                 }
             ],
-            "description": "Standards compliant HTML filter written in PHP",
-            "homepage": "http://htmlpurifier.org/",
-            "keywords": [
-                "html"
-            ],
-            "time": "2018-02-23T01:58:20+00:00"
+          "description": "Standards compliant HTML filter written in PHP",
+          "homepage": "http://htmlpurifier.org/",
+          "keywords": [
+            "html"
+          ],
+          "support": {
+            "issues": "https://github.com/ezyang/htmlpurifier/issues",
+            "source": "https://github.com/ezyang/htmlpurifier/tree/v4.14.0"
+          },
+          "time": "2021-12-25T01:21:49+00:00"
         },
         {
             "name": "topthink/framework",
@@ -104,17 +108,21 @@
                 },
                 {
                     "name": "yunwuxin",
-                    "email": "448901948@qq.com"
+                  "email": "448901948@qq.com"
                 }
             ],
-            "description": "the new thinkphp framework",
-            "homepage": "http://thinkphp.cn/",
-            "keywords": [
-                "framework",
-                "orm",
-                "thinkphp"
-            ],
-            "time": "2021-01-11T02:51:29+00:00"
+          "description": "the new thinkphp framework",
+          "homepage": "http://thinkphp.cn/",
+          "keywords": [
+            "framework",
+            "orm",
+            "thinkphp"
+          ],
+          "support": {
+            "issues": "https://github.com/top-think/framework/issues",
+            "source": "https://github.com/top-think/framework/tree/v5.1.41"
+          },
+          "time": "2021-01-11T02:51:29+00:00"
         },
         {
             "name": "topthink/think-captcha",
@@ -141,25 +149,29 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "think\\captcha\\": "src/"
-                },
-                "files": [
-                    "src/helper.php"
-                ]
+              "files": [
+                "src/helper.php"
+              ],
+              "psr-4": {
+                "think\\captcha\\": "src/"
+              }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "yunwuxin",
-                    "email": "448901948@qq.com"
-                }
-            ],
-            "description": "captcha package for thinkphp5",
-            "time": "2017-12-31T16:37:49+00:00"
+          "license": [
+            "Apache-2.0"
+          ],
+          "authors": [
+            {
+              "name": "yunwuxin",
+              "email": "448901948@qq.com"
+            }
+          ],
+          "description": "captcha package for thinkphp5",
+          "support": {
+            "issues": "https://github.com/top-think/think-captcha/issues",
+            "source": "https://github.com/top-think/think-captcha/tree/2.0"
+          },
+          "time": "2017-12-31T16:37:49+00:00"
         },
         {
             "name": "topthink/think-helper",
@@ -183,25 +195,29 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "think\\helper\\": "src"
-                },
-                "files": [
-                    "src/helper.php"
-                ]
+              "files": [
+                "src/helper.php"
+              ],
+              "psr-4": {
+                "think\\helper\\": "src"
+              }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "yunwuxin",
-                    "email": "448901948@qq.com"
-                }
-            ],
-            "description": "The ThinkPHP5 Helper Package",
-            "time": "2018-10-05T00:43:21+00:00"
+          "license": [
+            "Apache-2.0"
+          ],
+          "authors": [
+            {
+              "name": "yunwuxin",
+              "email": "448901948@qq.com"
+            }
+          ],
+          "description": "The ThinkPHP5 Helper Package",
+          "support": {
+            "issues": "https://github.com/top-think/think-helper/issues",
+            "source": "https://github.com/top-think/think-helper/tree/master"
+          },
+          "time": "2018-10-05T00:43:21+00:00"
         },
         {
             "name": "topthink/think-image",
@@ -237,43 +253,47 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "yunwuxin",
-                    "email": "448901948@qq.com"
-                }
-            ],
-            "description": "The ThinkPHP5 Image Package",
-            "time": "2016-09-29T06:05:43+00:00"
+          "license": [
+            "Apache-2.0"
+          ],
+          "authors": [
+            {
+              "name": "yunwuxin",
+              "email": "448901948@qq.com"
+            }
+          ],
+          "description": "The ThinkPHP5 Image Package",
+          "support": {
+            "issues": "https://github.com/top-think/think-image/issues",
+            "source": "https://github.com/top-think/think-image/tree/master"
+          },
+          "time": "2016-09-29T06:05:43+00:00"
         },
-        {
-            "name": "topthink/think-installer",
-            "version": "v2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/top-think/think-installer.git",
-                "reference": "f5400a12c60e513911aef41fe443fa6920952675"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-installer/zipball/f5400a12c60e513911aef41fe443fa6920952675",
-                "reference": "f5400a12c60e513911aef41fe443fa6920952675",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
+      {
+        "name": "topthink/think-installer",
+        "version": "v2.0.5",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/top-think/think-installer.git",
+          "reference": "38ba647706e35d6704b5d370c06f8a160b635f88"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://api.github.com/repos/top-think/think-installer/zipball/38ba647706e35d6704b5d370c06f8a160b635f88",
+          "reference": "38ba647706e35d6704b5d370c06f8a160b635f88",
+          "shasum": "",
+          "mirrors": [
+            {
+              "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+              "preferred": true
+            }
+          ]
+        },
             "require": {
-                "composer-plugin-api": "^1.0"
+              "composer-plugin-api": "^1.0||^2.0"
             },
             "require-dev": {
-                "composer/composer": "1.0.*@dev"
+              "composer/composer": "^1.0||^2.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -284,27 +304,32 @@
                     "think\\composer\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "yunwuxin",
-                    "email": "448901948@qq.com"
-                }
-            ],
-            "time": "2018-05-11T06:45:42+00:00"
-        }
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+          "Apache-2.0"
+        ],
+        "authors": [
+          {
+            "name": "yunwuxin",
+            "email": "448901948@qq.com"
+          }
+        ],
+        "support": {
+          "issues": "https://github.com/top-think/think-installer/issues",
+          "source": "https://github.com/top-think/think-installer/tree/v2.0.5"
+        },
+        "time": "2021-01-14T12:12:14+00:00"
+      }
     ],
-    "packages-dev": [],
-    "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
-    "prefer-stable": false,
-    "prefer-lowest": false,
-    "platform": {
-        "php": ">=5.6.0"
-    },
-    "platform-dev": []
+  "packages-dev": [],
+  "aliases": [],
+  "minimum-stability": "stable",
+  "stability-flags": [],
+  "prefer-stable": false,
+  "prefer-lowest": false,
+  "platform": {
+    "php": ">=5.6.0"
+  },
+  "platform-dev": [],
+  "plugin-api-version": "2.3.0"
 }
