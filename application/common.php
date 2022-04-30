@@ -1052,11 +1052,8 @@ if (!function_exists('action_log')) {
             }
 
             // 查询行为,判断是否执行
-            print_r($module);
-            print_r($action);
             $action_info = model('admin/action')->where('module', $module)->getByName($action);
             print_r($action_info);
-            print_r("c");
             exit();
             if($action_info['status'] != 1){
                 return '该行为被禁用或删除';
