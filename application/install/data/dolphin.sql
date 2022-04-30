@@ -94,6 +94,7 @@ INSERT INTO `dp_admin_action` VALUES ('39', 'admin', 'module_export', '导出模
 INSERT INTO `dp_admin_action` VALUES ('40', 'admin', 'packet_install', '安装数据包', '安装数据包', '', '[user|get_nickname] 安装了数据包：[details]', '1', '1480308342', '1480308342');
 INSERT INTO `dp_admin_action` VALUES ('41', 'admin', 'packet_uninstall', '卸载数据包', '卸载数据包', '', '[user|get_nickname] 卸载了数据包：[details]', '1', '1480308372', '1480308372');
 INSERT INTO `dp_admin_action` VALUES ('42', 'admin', 'system_config_update', '更新系统设置', '更新系统设置', '', '[user|get_nickname] 更新了系统设置：[details]', '1', '1480309555', '1480309642');
+INSERT INTO `dp_admin_action` VALUES ('42', 'user', 'user_signin', '用户登录', '用户登录', '', '[user|get_nickname] 用户登录 :[details]', '1', '1480309555', '1480309642');
 
 -- ----------------------------
 -- Table structure for `dp_admin_attachment`
