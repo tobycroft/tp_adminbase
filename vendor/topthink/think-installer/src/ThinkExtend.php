@@ -11,25 +11,24 @@
 
 namespace think\composer;
 
+use Composer\Installer\LibraryInstaller;
 use Composer\Package\PackageInterface;
 use Composer\Repository\InstalledRepositoryInterface;
 
 class ThinkExtend extends LibraryInstaller
 {
+
     public function install(InstalledRepositoryInterface $repo, PackageInterface $package)
     {
-        return parent::install($repo, $package)
-            ->then(function () use ($package) {
-                $this->copyExtraFiles($package);
-            });
+        parent::install($repo, $package);
+        $this->copyExtraFiles($package);
     }
 
     public function update(InstalledRepositoryInterface $repo, PackageInterface $initial, PackageInterface $target)
     {
-        return parent::update($repo, $initial, $target)
-            ->then(function () use ($target) {
-                $this->copyExtraFiles($target);
-            });
+        parent::update($repo, $initial, $target);
+        $this->copyExtraFiles($target);
+
     }
 
     protected function copyExtraFiles(PackageInterface $package)
@@ -61,6 +60,7 @@ class ThinkExtend extends LibraryInstaller
 
                     copy($source, $target);
                 }
+
             }
         }
     }
