@@ -12,6 +12,7 @@ namespace app\common\builder\table;
 use app\admin\model\Menu;
 use app\common\builder\ZBuilder;
 use app\user\model\Role;
+use think\Exception;
 use think\facade\Cache;
 use think\facade\Env;
 
@@ -633,12 +634,14 @@ class Builder extends ZBuilder
         $url = $this->_module . '/' . $this->_controller . '/' . $type;
         $MenuModel = new Menu();
         $menu = $MenuModel->where('url_value', $url)->find();
-        if ($menu['params'] != '') {
-            $url_params = explode('&', trim($menu['params'], '&'));
-            if (!empty($url_params)) {
-                foreach ($url_params as $item) {
-                    list($key, $value) = explode('=', $item);
-                    $params[$key] = $value;
+        if ($menu != null) {
+            if ($menu['params'] != '') {
+                $url_params = explode('&', trim($menu['params'], '&'));
+                if (!empty($url_params)) {
+                    foreach ($url_params as $item) {
+                        list($key, $value) = explode('=', $item);
+                        $params[$key] = $value;
+                    }
                 }
             }
         }
@@ -649,7 +652,11 @@ class Builder extends ZBuilder
             });
         }
 
-        return $menu['url_type'] == 'module_home' ? home_url($url, $params) : url($url, $params);
+        if ($menu) {
+            return $menu['url_type'] == 'module_home' ? home_url($url, $params) : url($url, $params);
+        } else {
+            return url($url, $params);
+        }
     }
 
     /**
@@ -2190,7 +2197,7 @@ class Builder extends ZBuilder
                                 }
                             }
 
-                            $row[$column['name'] . '__' . $column['type']] = call_user_func_array($column['default'], $params);
+//                            $row[$column['name'] . '__' . $column['type']] = call_user_func_array($column['default'], $params);
                             break;
                         case 'popover':
                             $length = empty($column['default']) ? 10 : $column['default'];
