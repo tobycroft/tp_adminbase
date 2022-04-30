@@ -24,11 +24,11 @@ if ($clear == 1) {
     if ($table_list) {
         foreach ($table_list as $table) {
             // 删除内容模型表
-            $sql = 'DROP TABLE IF EXISTS `' . $table . '`;';
+            $sql = 'DROP TABLE IF EXISTS `'.$table.'`;';
             try {
                 Db::execute($sql);
             } catch (\Exception $e) {
-                throw new Exception('删除表：' . $table . ' 失败！', 1001);
+                throw new Exception('删除表：'.$table.' 失败！', 1001);
             }
         }
     }
