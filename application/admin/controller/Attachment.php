@@ -9,6 +9,7 @@
 
 namespace app\admin\controller;
 
+use Aoss\Aoss;
 use app\admin\model\Attachment as AttachmentModel;
 use app\common\builder\ZBuilder;
 use think\Db;
@@ -144,15 +145,21 @@ class Attachment extends Admin
                 $file_input_name = 'file';
         }
         $file = $this->request->file($file_input_name);
+        $file_name = $file->getInfo('name');
 
+        $send_file = new Aoss();
+        $send_file->send_url = config("upload_url");
+        $send_ret = $send_file->send($file->getPathname(), $file->getMime(), $file_name);
+        if (!$send_ret) {
+            return $this->uploadError($from, config('upload_url'), $callback);
+        }
+        $file_path = $send_ret;
         // 判断附件是否已存在
         if ($file_exists = AttachmentModel::get(['md5' => $file->hash('md5')])) {
-            if ($file_exists['driver'] == 'local') {
-                $file_path = PUBLIC_PATH . $file_exists['path'];
-            } else {
-                $file_path = $file_exists['path'];
-            }
-
+//            if ($file_exists['driver'] == 'local') {
+//                $file_path = PUBLIC_PATH . $json_send['path'];
+//            } else {
+            $file_path = $file_exists['path'];
             // 附件已存在
             return $this->uploadSuccess($from, $file_path, $file_exists['name'], $file_exists['id'], $callback);
         }
@@ -235,7 +242,7 @@ class Attachment extends Admin
                 'uid' => session('user_auth.uid'),
                 'name' => $file->getInfo('name'),
                 'mime' => $file->getInfo('type'),
-                'path' => 'uploads/' . $dir . '/' . str_replace('\\', '/', $info->getSaveName()),
+                'path' => $file_path,
                 'ext' => $info->getExtension(),
                 'size' => $info->getSize(),
                 'md5' => $info->hash('md5'),
@@ -244,12 +251,12 @@ class Attachment extends Admin
                 'module' => $module,
                 'width' => $img_width,
                 'height' => $img_height,
+                'driver' => config('upload_driver'),
             ];
 
             // 写入数据库
             if ($file_add = AttachmentModel::create($file_info)) {
-                $file_path = PUBLIC_PATH . $file_info['path'];
-                return $this->uploadSuccess($from, $file_path, $file_info['name'], $file_add['id'], $callback);
+                return $this->uploadSuccess($from, $file_path, $file_info['name'], $file_path, $callback);
             } else {
                 return $this->uploadError($from, '上传失败', $callback);
             }
