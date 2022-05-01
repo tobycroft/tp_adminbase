@@ -256,7 +256,7 @@ class Attachment extends Admin
 
             // 写入数据库
             if ($file_add = AttachmentModel::create($file_info)) {
-                return $this->uploadSuccess($from, $file_path, $file_info['name'], $file_path, $callback);
+                return $this->uploadSuccess($from, $file_path, $file_info['name'], $file_add["id"], $callback);
             } else {
                 return $this->uploadError($from, '上传失败', $callback);
             }
