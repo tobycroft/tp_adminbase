@@ -1,11 +1,5 @@
 <?php
-// +----------------------------------------------------------------------
-// | 海豚PHP框架 [ DolphinPHP ]
-// +----------------------------------------------------------------------
-// | 版权所有 2016~2019 广东卓锐软件有限公司 [ http://www.zrthink.com ]
-// +----------------------------------------------------------------------
-// | 官方网站: http://dolphinphp.com
-// +----------------------------------------------------------------------
+
 
 namespace app\admin\controller;
 
@@ -256,7 +250,7 @@ class Attachment extends Admin
 
             // 写入数据库
             if ($file_add = AttachmentModel::create($file_info)) {
-                return $this->uploadSuccess($from, $file_path, $file_info['name'], $file_add["id"], $callback);
+                return $this->uploadSuccess($from, $file_path, $file_info['name'], $file_path, $callback);
             } else {
                 return $this->uploadError($from, '上传失败', $callback);
             }
@@ -667,7 +661,7 @@ class Attachment extends Admin
                     'code' => 1,
                     'info' => '上传成功',
                     'class' => 'success',
-                    'id' => $file_id,
+                    'id' => $file_path,
                     'path' => $file_path,
                 ]);
         }
