@@ -945,9 +945,9 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 更新数据
      * @access public
-     * @param  array      $data  数据数组
-     * @param  array      $where 更新条件
-     * @param  array|true $field 允许字段
+     * @param array $data 数据数组
+     * @param array $where 更新条件
+     * @param array|true $field 允许字段
      * @return static
      */
     public static function update($data = [], $where = [], $field = null)
@@ -957,7 +957,16 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
         if (!empty($field)) {
             $model->allowField($field);
         }
-
+        if (!is_string($data)){
+            foreach ($data as $key => $value) {
+                if ($value == "on") {
+                    $value = 1;
+                } elseif ($value == "off") {
+                    $value = 0;
+                }
+                $data[$key] = $value;
+            }
+        }
         $model->isUpdate(true)->save($data, $where);
 
         return $model;
