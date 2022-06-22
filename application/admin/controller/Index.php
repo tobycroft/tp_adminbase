@@ -125,7 +125,7 @@ class Index extends Admin
     {
         return json([
             'update' => '',
-            'auth' => $result['auth']
+            'auth' => ""
         ]);
         $params = config('dolphin.');
         $params['domain'] = request()->domain();
