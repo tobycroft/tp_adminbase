@@ -244,12 +244,12 @@ class Attachment extends Admin
             // 获取附件信息
             $file_info = [
                 'uid' => session('user_auth.uid'),
-                'name' => $file->getInfo('name'),
-                'mime' => $file->getInfo('type'),
+                'name' => $send_ret->name,
+                'mime' => $send_ret->mime,
                 'path' => $send_ret->url,
-                'ext' => $info->getExtension(),
-                'size' => $info->getSize(),
-                'md5' => $info->hash('md5'),
+                'ext' => $send_ret->ext,
+                'size' => $send_ret->size,
+                'md5' => $send_ret->md5,
                 'sha1' => $info->hash('sha1'),
                 'thumb' => $thumb_path_name,
                 'module' => $module,
