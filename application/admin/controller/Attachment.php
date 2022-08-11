@@ -143,10 +143,10 @@ class Attachment extends Admin
 
         $send_file = new Aoss("any", "complete", config("upload_url"));
         $send_ret = $send_file->send($file->getPathname(), $file->getMime(), $file_name);
-        if (!$send_ret) {
-            return $this->uploadError($from, config('upload_url'), $callback);
+        if ($send_ret->error) {
+            return $this->uploadError($from, $send_ret->data, $callback);
         }
-        $file_path = $send_ret;
+        $file_path = $send_ret->url;
         // 判断附件是否已存在
         if ($file_exists = AttachmentModel::get(['md5' => $file->hash('md5')])) {
 //            if ($file_exists['driver'] == 'local') {
