@@ -141,8 +141,8 @@ class Attachment extends Admin
         $file = $this->request->file($file_input_name);
         $file_name = $file->getInfo('name');
 
-        $send_file = new Aoss("any", "complete", config("upload_url"));
-        $send_ret = $send_file->send($file->getPathname(), $file->getMime(), $file_name);
+        $Aoss = new Aoss(config("upload_prefix"), "complete");
+        $send_ret = $Aoss->send($file->getPathname(), $file->getMime(), $file_name);
         if ($send_ret->error) {
             return $this->uploadError($from, $send_ret->data, $callback);
         }
@@ -154,7 +154,8 @@ class Attachment extends Admin
 //            } else {
             $file_path = $file_exists['path'];
             // 附件已存在
-            return $this->uploadSuccess($from, $file_path, $file_exists['name'], $file_exists['id'], $callback);
+            $Aoss->md5($file_exists["md5"]);
+            return $this->uploadSuccess($from, $file_path, $file_exists['name'], $file_exists['id'], $callback, $send_ret->data);
         }
 
         // 判断附件大小是否超过限制
@@ -249,7 +250,7 @@ class Attachment extends Admin
 
             // 写入数据库
             if ($file_add = AttachmentModel::create($file_info)) {
-                return $this->uploadSuccess($from, $file_path, $file_info['name'], $file_path, $callback);
+                return $this->uploadSuccess($from, $file_path, $file_info['name'], $file_path, $callback, $send_ret->data);
             } else {
                 return $this->uploadError($from, '上传失败', $callback);
             }
@@ -632,7 +633,7 @@ class Attachment extends Admin
      * @return string|\think\response\Json
      * @author 蔡伟明 <314013107@qq.com>
      */
-    private function uploadSuccess($from, $file_path = '', $file_name = '', $file_id = '', $callback = '', $data = '')
+    private function uploadSuccess($from, $file_path = '', $file_name = '', $file_id = '', $callback = '', $data = [])
     {
         switch ($from) {
             case 'wangeditor':
