@@ -155,7 +155,6 @@ class Attachment extends Admin
         }
 
         // 判断附件格式是否符合
-        $file_name = $file->getInfo('name');
         $file_ext = strtolower(substr($file_name, strrpos($file_name, '.') + 1));
         $error_msg = '';
         if ($ext_limit == '') {
@@ -233,10 +232,15 @@ class Attachment extends Admin
                     }
                 }
             }
-            $send_ret = $Aoss->send($file->getPathname(), $file->getMime(), $file_name);
-            if (isset($send_ret->error)) {
-                return $this->uploadError($from, $send_ret->error, $callback);
+            if (isset($md5_data->error)) {
+                $send_ret = $Aoss->send($file->getPathname(), $file->getMime(), $file_name);
+                if (isset($send_ret->error)) {
+                    return $this->uploadError($from, $send_ret->error, $callback);
+                }
+            } else {
+                $send_ret = $md5_data;
             }
+
             // 获取附件信息
             $file_info = [
                 'uid' => session('user_auth.uid'),
