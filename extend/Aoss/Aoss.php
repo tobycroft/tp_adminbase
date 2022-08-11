@@ -11,6 +11,7 @@ class Aoss
         return self::send_file_ret($this->send_url, $real_path, $mime_type, $file_name);
     }
 
+
     public static function send_file_url($send_url, $real_path, $mime_type, $file_name)
     {
         $postData = [
@@ -23,15 +24,7 @@ class Aoss
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
         $response = curl_exec($ch);
         curl_close($ch);
-        $json = json_decode($response, true);
-        if (empty($json) || !isset($json["code"])) {
-            return false;
-        }
-        if ($json["code"] == "0") {
-            return $json["data"];
-        } else {
-            return false;
-        }
+
     }
 
     public static function send_file_ret($send_url, $real_path, $mime_type, $file_name)
@@ -51,5 +44,24 @@ class Aoss
             return false;
         }
         return $json;
+    }
+}
+
+class AossSimpleRet
+{
+    public $error = null;
+    public $data = [];
+
+    public function __construct($response)
+    {
+        $json = json_decode($response, true);
+        if (empty($json) || !isset($json["code"])) {
+            return false;
+        }
+        if ($json["code"] == "0") {
+            $this->data = $json["data"];
+        } else {
+            return $this->error = $json["data"];
+        }
     }
 }
