@@ -632,7 +632,7 @@ class Attachment extends Admin
      * @return string|\think\response\Json
      * @author 蔡伟明 <314013107@qq.com>
      */
-    private function uploadSuccess($from, $file_path = '', $file_name = '', $file_id = '', $callback = '')
+    private function uploadSuccess($from, $file_path = '', $file_name = '', $file_id = '', $callback = '', $data = '')
     {
         switch ($from) {
             case 'wangeditor':
@@ -643,6 +643,7 @@ class Attachment extends Admin
                     "state" => "SUCCESS", // 上传状态，上传成功时必须返回"SUCCESS"
                     "url" => $file_path, // 返回的地址
                     "title" => $file_name, // 附件名
+                    "data" => $data,
                 ]);
                 break;
             case 'editormd':
@@ -650,6 +651,7 @@ class Attachment extends Admin
                     "success" => 1,
                     "message" => '上传成功',
                     "url" => $file_path,
+                    "data" => $data,
                 ]);
                 break;
             case 'ckeditor':
@@ -662,6 +664,7 @@ class Attachment extends Admin
                     'class' => 'success',
                     'id' => $file_path,
                     'path' => $file_path,
+                    "data" => $data,
                 ]);
         }
     }
