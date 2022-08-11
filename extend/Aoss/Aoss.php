@@ -4,11 +4,34 @@ namespace Aoss;
 
 class Aoss
 {
-    public $send_url = "";
+    private string $remote_url = "http://upload.tuuz.cc:81";
+    private string $send_url = "";
+    private string $token = "";
+    private string $mode = "";
+
+    public function __construct($token, $mode = "complete", $remote_url = "")
+    {
+        $this->send_url = $remote_url;
+        $this->token = $token;
+        $this->mode = $mode;
+
+        if (!isset($remote_url)) {
+            $this->send_url = $this->remote_url;
+            $this->send_url .= "/v1/file/index/up_complete";
+            $this->send_url .= "?token=" . $this->token;
+        }
+
+    }
 
     public function send($real_path, $mime_type, $file_name)
     {
-        return self::send_file_ret($this->send_url, $real_path, $mime_type, $file_name);
+        switch ($this->mode) {
+            case "complete":
+                return self::send_file_complete($this->send_url, $real_path, $mime_type, $file_name);
+
+            default:
+                return self::send_file_url($this->send_url, $real_path, $mime_type, $file_name);
+        }
     }
 
 
@@ -27,7 +50,7 @@ class Aoss
         return new AossSimpleRet($response);
     }
 
-    public static function send_file_ret($send_url, $real_path, $mime_type, $file_name): AossCompleteRet
+    public static function send_file_complete($send_url, $real_path, $mime_type, $file_name): AossCompleteRet
     {
         $postData = [
             'file' => new \CURLFile(realpath($real_path), $mime_type, $file_name)
@@ -45,8 +68,8 @@ class Aoss
 
 class AossSimpleRet
 {
-    public $error = null;
-    public $data = [];
+    public mixed $error = null;
+    public mixed $data = [];
 
     public function __construct($response)
     {
@@ -64,20 +87,20 @@ class AossSimpleRet
 
 class AossCompleteRet
 {
-    public $error = null;
-    public $data = [];
-    public $name = "";
-    public $path = "";
-    public $mime = "";
-    public $size = 0;
-    public $ext = "";
-    public $md5 = "";
-    public $src = "";
-    public $url = "";
-    public $surl = "";
-    public $duration = 0;
-    public $duration_str = "";
-    public $bitrate = 0;
+    public mixed $error = null;
+    public mixed $data = [];
+    public mixed $name = "";
+    public mixed $path = "";
+    public mixed $mime = "";
+    public mixed $size = 0;
+    public mixed $ext = "";
+    public mixed $md5 = "";
+    public mixed $src = "";
+    public mixed $url = "";
+    public mixed $surl = "";
+    public int $duration = 0;
+    public mixed $duration_str = "";
+    public mixed $bitrate = 0;
 
     public function __construct($response)
     {
