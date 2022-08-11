@@ -141,8 +141,7 @@ class Attachment extends Admin
         $file = $this->request->file($file_input_name);
         $file_name = $file->getInfo('name');
 
-        $send_file = new Aoss();
-        $send_file->send_url = config("upload_url");
+        $send_file = new Aoss("any", "complete", config("upload_url"));
         $send_ret = $send_file->send($file->getPathname(), $file->getMime(), $file_name);
         if (!$send_ret) {
             return $this->uploadError($from, config('upload_url'), $callback);
