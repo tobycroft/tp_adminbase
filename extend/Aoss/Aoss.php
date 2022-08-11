@@ -6,6 +6,8 @@ class Aoss
 {
     private string $remote_url = "http://upload.tuuz.cc:81";
     private string $send_url = "";
+    private string $send_path = "/v1/file/index";
+    protected string $send_token = "?token=";
     private string $token = "";
     private string $mode = "";
 
@@ -15,10 +17,10 @@ class Aoss
         $this->token = $token;
         $this->mode = $mode;
 
-        if (!isset($remote_url)) {
+        if (empty($remote_url)) {
             $this->send_url = $this->remote_url;
-            $this->send_url .= "/v1/file/index/up_complete";
-            $this->send_url .= "?token=" . $this->token;
+            $this->send_url .= $this->send_path . "/up_complete";
+            $this->send_url .= $this->send_token . $this->token;
         }
 
     }
@@ -33,7 +35,7 @@ class Aoss
 
     public function md5($md5): AossCompleteRet
     {
-        return self::check_file_complete($this->send_url, $md5);
+        return self::check_file_complete($this->remote_url . $this->send_path . "/md5" . $this->send_token . $this->token, $md5);
     }
 
 
@@ -92,13 +94,15 @@ class AossSimpleRet
     {
         $json = json_decode($response, true);
         if (empty($json) || !isset($json["code"])) {
-            return $this->error = $response;
+            $this->error = $response;
+            return $this;
         }
         if ($json["code"] == "0") {
             $this->data = $json["data"]["url"];
         } else {
-            return $this->error = $json["data"];
+            $this->error = $json["data"];
         }
+        return $this;
     }
 }
 
@@ -123,7 +127,8 @@ class AossCompleteRet
     {
         $json = json_decode($response, true);
         if (empty($json) || !isset($json["code"])) {
-            return $this->error = $response;
+            $this->error = $response;
+            return $this;
         }
         if ($json["code"] == "0") {
             $this->data = $json["data"];
@@ -139,7 +144,8 @@ class AossCompleteRet
             $this->duration_str = $this->data["duration_str"];
             $this->bitrate = $this->data["bitrate"];
         } else {
-            return $this->error = $json["data"];
+            $this->error = $json["data"];
         }
+        return $this;
     }
 }
