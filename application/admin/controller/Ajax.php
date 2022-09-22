@@ -231,28 +231,39 @@ class Ajax extends Common
                 ];
                 return json($data);
             } else {
-                $this->error('文件不存在');
+                $file_info = [
+                    'uid' => session('user_auth.uid'),
+                    'name' => $md5_data->name,
+                    'mime' => $md5_data->mime,
+                    'path' => $md5_data->url,
+                    'ext' => $md5_data->ext,
+                    'size' => $md5_data->size,
+                    'md5' => $md5_data->md5,
+                    'sha1' => $md5_data->sha1,
+                    'thumb' => "",
+                    'module' => "remote",
+                    'width' => $md5_data->width,
+                    'height' => $md5_data->height,
+                    'driver' => "remote",
+                ];
+                // 写入数据库
+                if (AttachmentModel::create($file_info)) {
+                    $data = [
+                        'code' => 1,
+                        'info' => '同步成功',
+                        'class' => 'success',
+                        'id' => $md5_data->url,
+                        'path' => $md5_data->url,
+                        'data' => $md5_data->data,
+                    ];
+                    return json($data);
+                } else {
+                    $this->error('文件同步失败');
+                }
             }
         } else {
             $this->error('文件不存在');
         }
-//        // 判断附件是否已存在
-//        if ($file_exists = AttachmentModel::get(['md5' => $md5])) {
-//            if ($file_exists['driver'] == 'local') {
-//                $file_path = PUBLIC_PATH . $file_exists['path'];
-//            } else {
-//                $file_path = $file_exists['path'];
-//            }
-//            return json([
-//                'code' => 1,
-//                'info' => '上传成功',
-//                'class' => 'success',
-//                'id' => $file_path,
-//                'path' => $file_path
-//            ]);
-//        } else {
-//            $this->error('文件不存在');
-//        }
     }
 
     /**
@@ -262,7 +273,8 @@ class Ajax extends Common
      * @throws \think\exception\DbException
      * @author 蔡伟明 <314013107@qq.com>
      */
-    public function getMyRoles()
+    public
+    function getMyRoles()
     {
         if (!is_signin()) {
             $this->error('请先登录');
@@ -291,7 +303,8 @@ class Ajax extends Common
      * @throws \think\exception\DbException
      * @author 蔡伟明 <314013107@qq.com>
      */
-    public function setMyRole($id = '')
+    public
+    function setMyRole($id = '')
     {
         if (!is_signin()) {
             $this->error('请先登录');
