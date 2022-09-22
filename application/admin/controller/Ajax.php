@@ -220,7 +220,7 @@ class Ajax extends Common
         if ($file_exists = AttachmentModel::get(['md5' => $md5])) {
             $data = [
                 'code' => 1,
-                'info' => '上传成功',
+                'info' => '文件已上传',
                 'class' => 'success',
                 'id' => $file_exists["path"],
                 'path' => $file_exists["path"],
@@ -260,6 +260,8 @@ class Ajax extends Common
             } else {
                 $this->error('文件同步失败');
             }
+        } else {
+            $this->error('需要上传文件');
         }
     }
 
