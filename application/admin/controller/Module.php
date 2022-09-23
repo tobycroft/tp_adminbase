@@ -3,19 +3,19 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\Action as ActionModel;
+use app\admin\model\Menu as MenuModel;
 use app\admin\model\Module as ModuleModel;
 use app\admin\model\Plugin as PluginModel;
-use app\admin\model\Menu as MenuModel;
-use app\admin\model\Action as ActionModel;
+use think\Db;
 use think\facade\Cache;
+use think\facade\Env;
+use think\facade\Hook;
 use util\Database;
-use util\Sql;
 use util\File;
 use util\PHPZip;
+use util\Sql;
 use util\Tree;
-use think\Db;
-use think\facade\Hook;
-use think\facade\Env;
 
 /**
  * 模块管理控制器
@@ -27,7 +27,6 @@ class Module extends Admin
      * 模块首页
      * @param string $group 分组
      * @param string $type 显示类型
-     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      */
     public function index($group = 'local', $type = '')
@@ -85,7 +84,6 @@ class Module extends Admin
      * 安装模块
      * @param string $name 模块标识
      * @param int $confirm 是否确认
-     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
@@ -119,15 +117,9 @@ class Module extends Admin
             if (isset($module_info['tables']) && !empty($module_info['tables'])) {
                 foreach ($module_info['tables'] as $table) {
                     if (Db::query("SHOW TABLES LIKE '".config('database.prefix')."{$table}'")) {
-                        $table_check[] = [
-                            'table' => config('database.prefix')."{$table}",
-                            'result' => '<span class="text-danger">存在同名</span>'
-                        ];
+                        $table_check[] = ['table' => config('database.prefix')."{$table}", 'result' => '<span class="text-danger">存在同名</span>'];
                     } else {
-                        $table_check[] = [
-                            'table' => config('database.prefix')."{$table}",
-                            'result' => '<i class="fa fa-check text-success"></i>'
-                        ];
+                        $table_check[] = ['table' => config('database.prefix')."{$table}", 'result' => '<i class="fa fa-check text-success"></i>'];
                     }
                 }
             }
@@ -216,7 +208,6 @@ class Module extends Admin
      * 卸载模块
      * @param string $name 模块名
      * @param int $confirm 是否确认
-     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\PDOException
@@ -298,7 +289,6 @@ class Module extends Admin
     /**
      * 更新模块配置
      * @param string $name 模块名
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function update($name = '')
     {
@@ -336,7 +326,6 @@ class Module extends Admin
     /**
      * 导出模块
      * @param string $name 模块名
-     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
@@ -421,7 +410,6 @@ class Module extends Admin
      * 创建模块菜单文件
      * @param array $menus 菜单
      * @param string $name 模块名
-     * @author 蔡伟明 <314013107@qq.com>
      * @return int
      */
     private function buildMenuFile($menus = [], $name = '')
@@ -453,7 +441,6 @@ INFO;
      * 创建模块配置文件
      * @param array $info 模块配置信息
      * @param string $name 模块名
-     * @author 蔡伟明 <314013107@qq.com>
      * @return int
      */
     private function buildInfoFile($info = [], $name = '')
@@ -485,7 +472,6 @@ INFO;
      * 设置状态
      * @param string $type 类型：disable/enable
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
@@ -501,10 +487,7 @@ INFO;
         $status = $type == 'enable' ? 1 : 0;
 
         // 将模块对应的菜单禁用或启用
-        $map = [
-            'pid'    => 0,
-            'module' => $module['name']
-        ];
+        $map = ['pid'    => 0, 'module' => $module['name']];
         MenuModel::where($map)->setField('status', $status);
 
         if (false !== ModuleModel::where('id', $ids)->setField('status', $status)) {
@@ -519,7 +502,6 @@ INFO;
     /**
      * 禁用模块
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
@@ -532,7 +514,6 @@ INFO;
     /**
      * 启用模块
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
@@ -547,23 +528,12 @@ INFO;
      * @param array $menus 菜单
      * @param string $module 模型名称
      * @param int $pid 父级ID
-     * @author 蔡伟明 <314013107@qq.com>
      * @return bool
      */
     private function addMenus($menus = [], $module = '', $pid = 0)
     {
         foreach ($menus as $menu) {
-            $data = [
-                'pid'         => $pid,
-                'module'      => $module,
-                'title'       => $menu['title'],
-                'icon'        => isset($menu['icon']) ? $menu['icon'] : 'fa fa-fw fa-puzzle-piece',
-                'url_type'    => isset($menu['url_type']) ? $menu['url_type'] : 'module_admin',
-                'url_value'   => isset($menu['url_value']) ? $menu['url_value'] : '',
-                'url_target'  => isset($menu['url_target']) ? $menu['url_target'] : '_self',
-                'online_hide' => isset($menu['online_hide']) ? $menu['online_hide'] : 0,
-                'status'      => isset($menu['status']) ? $menu['status'] : 1
-            ];
+            $data = ['pid'         => $pid, 'module'      => $module, 'title'       => $menu['title'], 'icon'        => isset($menu['icon']) ? $menu['icon'] : 'fa fa-fw fa-puzzle-piece', 'url_type'    => isset($menu['url_type']) ? $menu['url_type'] : 'module_admin', 'url_value'   => isset($menu['url_value']) ? $menu['url_value'] : '', 'url_target'  => isset($menu['url_target']) ? $menu['url_target'] : '_self', 'online_hide' => isset($menu['online_hide']) ? $menu['online_hide'] : 0, 'status'      => isset($menu['status']) ? $menu['status'] : 1];
 
             $result = MenuModel::create($data);
             if (!$result) return false;
@@ -580,7 +550,6 @@ INFO;
      * 检查依赖
      * @param string $type 类型：module/plugin
      * @param array $data 检查数据
-     * @author 蔡伟明 <314013107@qq.com>
      * @return array
      */
     private function checkDependence($type = '', $data = [])
@@ -599,13 +568,7 @@ INFO;
 
             // 比对版本
             $result = version_compare($curr_version, $value[2], $value[3]);
-            $need[$key] = [
-                $type => $value[0],
-                'identifier' => $value[1],
-                'version' => $curr_version ? $curr_version : '未安装',
-                'version_need' => $value[3].$value[2],
-                'result' => $result ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-times text-danger"></i>'
-            ];
+            $need[$key] = [$type => $value[0], 'identifier' => $value[1], 'version' => $curr_version ? $curr_version : '未安装', 'version_need' => $value[3].$value[2], 'result' => $result ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-times text-danger"></i>'];
         }
 
         return $need;

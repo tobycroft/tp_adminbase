@@ -3,9 +3,9 @@
 
 namespace app\admin\controller;
 
-use app\common\builder\ZBuilder;
 use app\admin\model\Icon as IconModel;
 use app\admin\model\IconList as IconListModel;
+use app\common\builder\ZBuilder;
 
 /**
  * 图标控制器
@@ -15,7 +15,6 @@ class Icon extends Admin
 {
     /**
      * 图标列表
-     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\DbException
@@ -55,7 +54,6 @@ class Icon extends Admin
 
     /**
      * 新增
-     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\PDOException
@@ -121,7 +119,6 @@ class Icon extends Admin
     /**
      * 图标列表
      * @param string $id
-     * @author 蔡伟明 <314013107@qq.com>
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\DbException
@@ -158,7 +155,6 @@ class Icon extends Admin
     /**
      * 更新图标
      * @param string $id
-     * @author 蔡伟明 <314013107@qq.com>
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
@@ -206,7 +202,6 @@ class Icon extends Admin
      * @param string $ids
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @author 蔡伟明 <314013107@qq.com>
      */
     public function delete($ids = '')
     {
