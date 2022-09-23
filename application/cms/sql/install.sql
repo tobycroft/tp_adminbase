@@ -185,43 +185,50 @@ CREATE TABLE `dp_cms_link` (
 -- -----------------------------
 DROP TABLE IF EXISTS `dp_cms_menu`;
 CREATE TABLE `dp_cms_menu` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `nid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '导航id',
-  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '父级id',
-  `column` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '栏目id',
-  `page` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '单页id',
-  `type` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '类型：0-栏目链接，1-单页链接，2-自定义链接',
-  `title` varchar(128) NOT NULL DEFAULT '' COMMENT '菜单标题',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '链接',
-  `css` varchar(64) NOT NULL DEFAULT '' COMMENT 'css类',
-  `rel` varchar(64) NOT NULL DEFAULT '' COMMENT '链接关系网',
-  `target` varchar(16) NOT NULL DEFAULT '' COMMENT '打开方式',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
-  `status` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
-  PRIMARY KEY (`id`)
+                               `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                               `nid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '导航id',
+                               `pid`         int(11) unsigned NOT NULL DEFAULT '0' COMMENT '父级id',
+                               `column`      int(11) unsigned NOT NULL DEFAULT '0' COMMENT '栏目id',
+                               `page`        int(11) unsigned NOT NULL DEFAULT '0' COMMENT '单页id',
+                               `type`        tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '类型：0-栏目链接，1-单页链接，2-自定义链接',
+                               `title`       varchar(128) NOT NULL DEFAULT '' COMMENT '菜单标题',
+                               `url`         varchar(255) NOT NULL DEFAULT '' COMMENT '链接',
+                               `css`         varchar(64) NOT NULL DEFAULT '' COMMENT 'css类',
+                               `rel`         varchar(64) NOT NULL DEFAULT '' COMMENT '链接关系网',
+                               `target`      varchar(16) NOT NULL DEFAULT '' COMMENT '打开方式',
+                               `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+                               `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                               `sort`        int(11) NOT NULL DEFAULT '100' COMMENT '排序',
+                               `status`      tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '状态',
+                               PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='菜单表';
 
 -- -----------------------------
 -- 表数据 `dp_cms_menu`
 -- -----------------------------
-INSERT INTO `dp_cms_menu` VALUES ('1', '1', '0', '0', '0', '2', '首页', 'cms/index/index', '', '', '_self', '1492345605', '1492345605', '100', '1');
-INSERT INTO `dp_cms_menu` VALUES ('2', '2', '0', '0', '0', '2', '关于我们', 'http://www.dolphinphp.com', '', '', '_self', '1492346763', '1492346763', '100', '1');
-INSERT INTO `dp_cms_menu` VALUES ('3', '3', '0', '0', '0', '2', '开发文档', 'http://www.kancloud.cn/ming5112/dolphinphp', '', '', '_self', '1492346812', '1492346812', '100', '1');
-INSERT INTO `dp_cms_menu` VALUES ('4', '3', '0', '0', '0', '2', '开发者社区', 'http://bbs.dolphinphp.com/', '', '', '_self', '1492346832', '1492346832', '100', '1');
-INSERT INTO `dp_cms_menu` VALUES ('5', '1', '0', '0', '0', '2', '二级菜单', 'http://www.dolphinphp.com', '', '', '_self', '1492347372', '1492347510', '100', '1');
-INSERT INTO `dp_cms_menu` VALUES ('6', '1', '5', '0', '0', '2', '子菜单', 'http://www.dolphinphp.com', '', '', '_self', '1492347388', '1492347520', '100', '1');
+INSERT INTO `dp_cms_menu`
+VALUES ('1', '1', '0', '0', '0', '2', '首页', 'cms/index/index', '', '', '_self', '1492345605', '1492345605', '100', '1');
+INSERT INTO `dp_cms_menu`
+VALUES ('2', '2', '0', '0', '0', '2', '关于我们', 'http://www.thinkphp.cn', '', '', '_self', '1492346763', '1492346763', '100', '1');
+INSERT INTO `dp_cms_menu`
+VALUES ('3', '3', '0', '0', '0', '2', '开发文档', 'http://www.kancloud.cn/ming5112/ThinkPHP', '', '', '_self', '1492346812', '1492346812', '100', '1');
+INSERT INTO `dp_cms_menu`
+VALUES ('4', '3', '0', '0', '0', '2', '开发者社区', 'http://bbs.thinkphp.cn/', '', '', '_self', '1492346832', '1492346832', '100', '1');
+INSERT INTO `dp_cms_menu`
+VALUES ('5', '1', '0', '0', '0', '2', '二级菜单', 'http://www.thinkphp.cn', '', '', '_self', '1492347372', '1492347510', '100', '1');
+INSERT INTO `dp_cms_menu`
+VALUES ('6', '1', '5', '0', '0', '2', '子菜单', 'http://www.thinkphp.cn', '', '', '_self', '1492347388', '1492347520', '100', '1');
 
 -- -----------------------------
 -- 表结构 `dp_cms_model`
 -- -----------------------------
 DROP TABLE IF EXISTS `dp_cms_model`;
-CREATE TABLE `dp_cms_model` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '模型名称',
-  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '模型标题',
-  `table` varchar(64) NOT NULL DEFAULT '' COMMENT '附加表名称',
+CREATE TABLE `dp_cms_model`
+(
+    `id`        int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `name`      varchar(32) NOT NULL DEFAULT '' COMMENT '模型名称',
+    `title`     varchar(32) NOT NULL DEFAULT '' COMMENT '模型标题',
+    `table`     varchar(64) NOT NULL DEFAULT '' COMMENT '附加表名称',
   `type` tinyint(2) NOT NULL DEFAULT '1' COMMENT '模型类别：0-系统模型，1-普通模型，2-独立模型',
   `icon` varchar(64) NOT NULL,
   `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',

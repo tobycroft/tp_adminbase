@@ -7,7 +7,7 @@
 
 return [
     // 验证码密钥
-    'seKey' => 'DolphinPHP.COM',
+    'seKey' => 'thinkphp.cn',
     // 验证码图片高度
     'imageH' => 34,
     // 验证码图片宽度

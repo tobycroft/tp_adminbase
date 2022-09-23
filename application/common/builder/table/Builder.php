@@ -6,7 +6,6 @@ namespace app\common\builder\table;
 use app\admin\model\Menu;
 use app\common\builder\ZBuilder;
 use app\user\model\Role;
-use think\Exception;
 use think\facade\Cache;
 use think\facade\Env;
 
@@ -1557,7 +1556,7 @@ class Builder extends ZBuilder
 
     /**
      * 设置Tab按钮列表
-     * @param array $tab_list Tab列表  ['title' => '标题', 'href' => 'http://www.dolphinphp.com']
+     * @param array $tab_list Tab列表  ['title' => '标题', 'href' => 'http://www.thinkphp.cn']
      * @param string $curr_tab 当前tab
      * @return $this
      * @author 蔡伟明 <314013107@qq.com>

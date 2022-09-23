@@ -1,4 +1,4 @@
-DolphinPHP
+ThinkPHP
 ===============
 
 # 插件静态目录

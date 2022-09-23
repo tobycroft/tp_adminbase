@@ -150,7 +150,7 @@ class Index extends Admin
 
         if ($result['code'] == 1) {
             return json([
-                'update' => '<a class="badge badge-primary" href="http://www.dolphinphp.com/download" target="_blank">有新版本：' . $result["version"] . '</a>',
+                'update' => '<a class="badge badge-primary" href="http://www.thinkphp.cn/download" target="_blank">有新版本：' . $result["version"] . '</a>',
                 'auth' => $result['auth']
             ]);
         } else {

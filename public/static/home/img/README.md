@@ -1,4 +1,4 @@
-DolphinPHP
+ThinkPHP
 ===============
 
 # 前台图片目录

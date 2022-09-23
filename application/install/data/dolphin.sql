@@ -4,7 +4,7 @@ Navicat MySQL Data Transfer
 Source Server         : localhost
 Source Server Version : 50540
 Source Host           : localhost:3306
-Source Database       : dolphinphp
+Source Database       : ThinkPHP
 
 Target Server Type    : MYSQL
 Target Server Version : 50540
@@ -133,51 +133,87 @@ CREATE TABLE `dp_admin_attachment` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_config`;
 CREATE TABLE `dp_admin_config` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL DEFAULT '' COMMENT '名称',
-  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '标题',
-  `group` varchar(32) NOT NULL DEFAULT '' COMMENT '配置分组',
-  `type` varchar(32) NOT NULL DEFAULT '' COMMENT '类型',
-  `value` text NOT NULL COMMENT '配置值',
-  `options` text NOT NULL COMMENT '配置项',
-  `tips` varchar(256) NOT NULL DEFAULT '' COMMENT '配置提示',
-  `ajax_url` varchar(256) NOT NULL DEFAULT '' COMMENT '联动下拉框ajax地址',
-  `next_items` varchar(256) NOT NULL DEFAULT '' COMMENT '联动下拉框的下级下拉框名，多个以逗号隔开',
-  `param` varchar(32) NOT NULL DEFAULT '' COMMENT '联动下拉框请求参数名',
-  `format` varchar(32) NOT NULL DEFAULT '' COMMENT '格式，用于格式文本',
-  `table` varchar(32) NOT NULL DEFAULT '' COMMENT '表名，只用于快速联动类型',
-  `level` tinyint(2) unsigned NOT NULL DEFAULT '2' COMMENT '联动级别，只用于快速联动类型',
-  `key` varchar(32) NOT NULL DEFAULT '' COMMENT '键字段，只用于快速联动类型',
-  `option` varchar(32) NOT NULL DEFAULT '' COMMENT '值字段，只用于快速联动类型',
-  `pid` varchar(32) NOT NULL DEFAULT '' COMMENT '父级id字段，只用于快速联动类型',
-  `ak` varchar(32) NOT NULL DEFAULT '' COMMENT '百度地图appkey',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态：0禁用，1启用',
-  PRIMARY KEY (`id`)
+                                   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                                   `name` varchar(64) NOT NULL DEFAULT '' COMMENT '名称',
+                                   `title` varchar(32) NOT NULL DEFAULT '' COMMENT '标题',
+                                   `group` varchar(32) NOT NULL DEFAULT '' COMMENT '配置分组',
+                                   `type` varchar(32) NOT NULL DEFAULT '' COMMENT '类型',
+                                   `value` text NOT NULL COMMENT '配置值',
+                                   `options` text NOT NULL COMMENT '配置项',
+                                   `tips` varchar(256) NOT NULL DEFAULT '' COMMENT '配置提示',
+                                   `ajax_url` varchar(256) NOT NULL DEFAULT '' COMMENT '联动下拉框ajax地址',
+                                   `next_items`  varchar(256) NOT NULL DEFAULT '' COMMENT '联动下拉框的下级下拉框名，多个以逗号隔开',
+                                   `param`       varchar(32) NOT NULL DEFAULT '' COMMENT '联动下拉框请求参数名',
+                                   `format`      varchar(32) NOT NULL DEFAULT '' COMMENT '格式，用于格式文本',
+                                   `table`       varchar(32) NOT NULL DEFAULT '' COMMENT '表名，只用于快速联动类型',
+                                   `level`       tinyint(2) unsigned NOT NULL DEFAULT '2' COMMENT '联动级别，只用于快速联动类型',
+                                   `key`         varchar(32) NOT NULL DEFAULT '' COMMENT '键字段，只用于快速联动类型',
+                                   `option`      varchar(32) NOT NULL DEFAULT '' COMMENT '值字段，只用于快速联动类型',
+                                   `pid`         varchar(32) NOT NULL DEFAULT '' COMMENT '父级id字段，只用于快速联动类型',
+                                   `ak`          varchar(32) NOT NULL DEFAULT '' COMMENT '百度地图appkey',
+                                   `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+                                   `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                   `sort`        int(11) NOT NULL DEFAULT '100' COMMENT '排序',
+                                   `status`      tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态：0禁用，1启用',
+                                   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COMMENT='系统配置表';
 
 -- ----------------------------
 -- Records of dp_admin_config
 -- ----------------------------
-INSERT INTO `dp_admin_config` VALUES ('1', 'web_site_status', '站点开关', 'base', 'switch', '1', '', '站点关闭后将不能访问，后台可正常登录', '', '', '', '', '', '2', '', '', '', '', '1475240395', '1477403914', '1', '1');
-INSERT INTO `dp_admin_config` VALUES ('2', 'web_site_title', '站点标题', 'base', 'text', '海豚PHP', '', '调用方式：<code>config(\'web_site_title\')</code>', '', '', '', '', '', '2', '', '', '', '', '1475240646', '1477710341', '2', '1');
-INSERT INTO `dp_admin_config` VALUES ('3', 'web_site_slogan', '站点标语', 'base', 'text', '海豚PHP，极简、极速、极致', '', '站点口号，调用方式：<code>config(\'web_site_slogan\')</code>', '', '', '', '', '', '2', '', '', '', '', '1475240994', '1477710357', '3', '1');
-INSERT INTO `dp_admin_config` VALUES ('4', 'web_site_logo', '站点LOGO', 'base', 'image', '', '', '', '', '', '', '', '', '2', '', '', '', '', '1475241067', '1475241067', '4', '1');
-INSERT INTO `dp_admin_config` VALUES ('5', 'web_site_description', '站点描述', 'base', 'textarea', '', '', '网站描述，有利于搜索引擎抓取相关信息', '', '', '', '', '', '2', '', '', '', '', '1475241186', '1475241186', '6', '1');
-INSERT INTO `dp_admin_config` VALUES ('6', 'web_site_keywords', '站点关键词', 'base', 'text', '海豚PHP、PHP开发框架、后台框架', '', '网站搜索引擎关键字', '', '', '', '', '', '2', '', '', '', '', '1475241328', '1475241328', '7', '1');
-INSERT INTO `dp_admin_config` VALUES ('7', 'web_site_copyright', '版权信息', 'base', 'text', 'Copyright © 2015-2017 DolphinPHP All rights reserved.', '', '调用方式：<code>config(\'web_site_copyright\')</code>', '', '', '', '', '', '2', '', '', '', '', '1475241416', '1477710383', '8', '1');
-INSERT INTO `dp_admin_config` VALUES ('8', 'web_site_icp', '备案信息', 'base', 'text', '', '', '调用方式：<code>config(\'web_site_icp\')</code>', '', '', '', '', '', '2', '', '', '', '', '1475241441', '1477710441', '9', '1');
-INSERT INTO `dp_admin_config` VALUES ('9', 'web_site_statistics', '站点统计', 'base', 'textarea', '', '', '网站统计代码，支持百度、Google、cnzz等，调用方式：<code>config(\'web_site_statistics\')</code>', '', '', '', '', '', '2', '', '', '', '', '1475241498', '1477710455', '10', '1');
-INSERT INTO `dp_admin_config` VALUES ('10', 'config_group', '配置分组', 'system', 'array', 'base:基本\r\nsystem:系统\r\nupload:上传\r\ndevelop:开发\r\ndatabase:数据库', '', '', '', '', '', '', '', '2', '', '', '', '', '1475241716', '1477649446', '100', '1');
-INSERT INTO `dp_admin_config` VALUES ('11', 'form_item_type', '配置类型', 'system', 'array', 'text:单行文本\r\ntextarea:多行文本\r\nstatic:静态文本\r\npassword:密码\r\ncheckbox:复选框\r\nradio:单选按钮\r\ndate:日期\r\ndatetime:日期+时间\r\nhidden:隐藏\r\nswitch:开关\r\narray:数组\r\nselect:下拉框\r\nlinkage:普通联动下拉框\r\nlinkages:快速联动下拉框\r\nimage:单张图片\r\nimages:多张图片\r\nfile:单个文件\r\nfiles:多个文件\r\nueditor:UEditor 编辑器\r\nwangeditor:wangEditor 编辑器\r\neditormd:markdown 编辑器\r\nckeditor:ckeditor 编辑器\r\nicon:字体图标\r\ntags:标签\r\nnumber:数字\r\nbmap:百度地图\r\ncolorpicker:取色器\r\njcrop:图片裁剪\r\nmasked:格式文本\r\nrange:范围\r\ntime:时间', '', '', '', '', '', '', '', '2', '', '', '', '', '1475241835', '1495853193', '100', '1');
-INSERT INTO `dp_admin_config` VALUES ('12', 'upload_file_size', '文件上传大小限制', 'upload', 'text', '0', '', '0为不限制大小，单位：kb', '', '', '', '', '', '2', '', '', '', '', '1475241897', '1477663520', '100', '1');
-INSERT INTO `dp_admin_config` VALUES ('13', 'upload_file_ext', '允许上传的文件后缀', 'upload', 'tags', 'doc,docx,xls,xlsx,ppt,pptx,pdf,wps,txt,rar,zip,gz,bz2,7z', '', '多个后缀用逗号隔开，不填写则不限制类型', '', '', '', '', '', '2', '', '', '', '', '1475241975', '1477649489', '100', '1');
-INSERT INTO `dp_admin_config` VALUES ('14', 'upload_image_size', '图片上传大小限制', 'upload', 'text', '0', '', '0为不限制大小，单位：kb', '', '', '', '', '', '2', '', '', '', '', '1475242015', '1477663529', '100', '1');
-INSERT INTO `dp_admin_config` VALUES ('15', 'upload_image_ext', '允许上传的图片后缀', 'upload', 'tags', 'gif,jpg,jpeg,bmp,png', '', '多个后缀用逗号隔开，不填写则不限制类型', '', '', '', '', '', '2', '', '', '', '', '1475242056', '1477649506', '100', '1');
-INSERT INTO `dp_admin_config` VALUES ('16', 'list_rows', '分页数量', 'system', 'number', '20', '', '每页的记录数', '', '', '', '', '', '2', '', '', '', '', '1475242066', '1476074507', '101', '1');
-INSERT INTO `dp_admin_config` VALUES ('17', 'system_color', '后台配色方案', 'system', 'radio', 'default', 'default:Default\r\namethyst:Amethyst\r\ncity:City\r\nflat:Flat\r\nmodern:Modern\r\nsmooth:Smooth', '', '', '', '', '', '', '2', '', '', '', '', '1475250066', '1477316689', '102', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('1', 'web_site_status', '站点开关', 'base', 'switch', '1', '', '站点关闭后将不能访问，后台可正常登录', '', '', '', '', '', '2', '', '', '', '',
+        '1475240395', '1477403914', '1', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('2', 'web_site_title', '站点标题', 'base', 'text', 'ThinkPHP', '', '调用方式：<code>config(\'web_site_title\')</code>', '', '', '', '', '', '2', '', '',
+        '', '', '1475240646', '1477710341', '2', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('3', 'web_site_slogan', '站点标语', 'base', 'text', 'ThinkPHP，极简、极速、极致', '', '站点口号，调用方式：<code>config(\'web_site_slogan\')</code>', '', '',
+        '', '', '', '2', '', '', '', '', '1475240994', '1477710357', '3', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('4', 'web_site_logo', '站点LOGO', 'base', 'image', '', '', '', '', '', '', '', '', '2', '', '', '', '', '1475241067', '1475241067', '4', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('5', 'web_site_description', '站点描述', 'base', 'textarea', '', '', '网站描述，有利于搜索引擎抓取相关信息', '', '', '', '', '', '2', '', '', '', '',
+        '1475241186', '1475241186', '6', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('6', 'web_site_keywords', '站点关键词', 'base', 'text', 'ThinkPHP、PHP开发框架、后台框架', '', '网站搜索引擎关键字', '', '', '', '', '', '2', '', '', '',
+        '', '1475241328', '1475241328', '7', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('7', 'web_site_copyright', '版权信息', 'base', 'text', 'Copyright © 2015-2017 ThinkPHP All rights reserved.', '',
+        '调用方式：<code>config(\'web_site_copyright\')</code>', '', '', '', '', '', '2', '', '', '', '', '1475241416', '1477710383', '8', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('8', 'web_site_icp', '备案信息', 'base', 'text', '', '', '调用方式：<code>config(\'web_site_icp\')</code>', '', '', '', '', '', '2', '', '', '', '',
+        '1475241441', '1477710441', '9', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('9', 'web_site_statistics', '站点统计', 'base', 'textarea', '', '',
+        '网站统计代码，支持百度、Google、cnzz等，调用方式：<code>config(\'web_site_statistics\')</code>', '', '', '', '', '', '2', '', '', '', '', '1475241498',
+        '1477710455', '10', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('10', 'config_group', '配置分组', 'system', 'array', 'base:基本\r\nsystem:系统\r\nupload:上传\r\ndevelop:开发\r\ndatabase:数据库', '', '', '', '', '',
+        '', '', '2', '', '', '', '', '1475241716', '1477649446', '100', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('11', 'form_item_type', '配置类型', 'system', 'array',
+        'text:单行文本\r\ntextarea:多行文本\r\nstatic:静态文本\r\npassword:密码\r\ncheckbox:复选框\r\nradio:单选按钮\r\ndate:日期\r\ndatetime:日期+时间\r\nhidden:隐藏\r\nswitch:开关\r\narray:数组\r\nselect:下拉框\r\nlinkage:普通联动下拉框\r\nlinkages:快速联动下拉框\r\nimage:单张图片\r\nimages:多张图片\r\nfile:单个文件\r\nfiles:多个文件\r\nueditor:UEditor 编辑器\r\nwangeditor:wangEditor 编辑器\r\neditormd:markdown 编辑器\r\nckeditor:ckeditor 编辑器\r\nicon:字体图标\r\ntags:标签\r\nnumber:数字\r\nbmap:百度地图\r\ncolorpicker:取色器\r\njcrop:图片裁剪\r\nmasked:格式文本\r\nrange:范围\r\ntime:时间',
+        '', '', '', '', '', '', '', '2', '', '', '', '', '1475241835', '1495853193', '100', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('12', 'upload_file_size', '文件上传大小限制', 'upload', 'text', '0', '', '0为不限制大小，单位：kb', '', '', '', '', '', '2', '', '', '', '', '1475241897',
+        '1477663520', '100', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('13', 'upload_file_ext', '允许上传的文件后缀', 'upload', 'tags', 'doc,docx,xls,xlsx,ppt,pptx,pdf,wps,txt,rar,zip,gz,bz2,7z', '',
+        '多个后缀用逗号隔开，不填写则不限制类型', '', '', '', '', '', '2', '', '', '', '', '1475241975', '1477649489', '100', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('14', 'upload_image_size', '图片上传大小限制', 'upload', 'text', '0', '', '0为不限制大小，单位：kb', '', '', '', '', '', '2', '', '', '', '',
+        '1475242015', '1477663529', '100', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('15', 'upload_image_ext', '允许上传的图片后缀', 'upload', 'tags', 'gif,jpg,jpeg,bmp,png', '', '多个后缀用逗号隔开，不填写则不限制类型', '', '', '', '',
+        '', '2', '', '', '', '', '1475242056', '1477649506', '100', '1');
+INSERT INTO `dp_admin_config`
+VALUES ('16', 'list_rows', '分页数量', 'system', 'number', '20', '', '每页的记录数', '', '', '', '', '', '2', '', '', '', '', '1475242066', '1476074507', '101',
+        '1');
+INSERT INTO `dp_admin_config`
+VALUES ('17', 'system_color', '后台配色方案', 'system', 'radio', 'default',
+        'default:Default\r\namethyst:Amethyst\r\ncity:City\r\nflat:Flat\r\nmodern:Modern\r\nsmooth:Smooth', '', '', '', '', '', '', '2', '', '', '', '',
+        '1475250066', '1477316689', '102', '1');
 INSERT INTO `dp_admin_config` VALUES ('18', 'develop_mode', '开发模式', 'develop', 'radio', '1', '0:关闭\r\n1:开启', '', '', '', '', '', '', '2', '', '', '', '', '1476864205', '1476864231', '100', '1');
 INSERT INTO `dp_admin_config` VALUES ('19', 'app_trace', '显示页面Trace', 'develop', 'radio', '0', '0:否\r\n1:是', '', '', '', '', '', '', '2', '', '', '', '', '1476866355', '1476866355', '100', '1');
 INSERT INTO `dp_admin_config` VALUES ('21', 'data_backup_path', '数据库备份根路径', 'database', 'text', '../data/', '', '路径必须以 / 结尾', '', '', '', '', '', '2', '', '', '', '', '1477017745', '1477018467', '100', '1');
@@ -516,40 +552,45 @@ CREATE TABLE `dp_admin_message` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_module`;
 CREATE TABLE `dp_admin_module` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '模块名称（标识）',
-  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '模块标题',
-  `icon` varchar(64) NOT NULL DEFAULT '' COMMENT '图标',
-  `description` text NOT NULL COMMENT '描述',
-  `author` varchar(32) NOT NULL DEFAULT '' COMMENT '作者',
-  `author_url` varchar(255) NOT NULL DEFAULT '' COMMENT '作者主页',
-  `config` text NULL COMMENT '配置信息',
-  `access` text NULL COMMENT '授权配置',
-  `version` varchar(16) NOT NULL DEFAULT '' COMMENT '版本号',
-  `identifier` varchar(64) NOT NULL DEFAULT '' COMMENT '模块唯一标识符',
-  `system_module` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否为系统模块',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `sort` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
-  `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
-  PRIMARY KEY (`id`)
+                                   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                                   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '模块名称（标识）',
+                                   `title`         varchar(32) NOT NULL DEFAULT '' COMMENT '模块标题',
+                                   `icon`          varchar(64) NOT NULL DEFAULT '' COMMENT '图标',
+                                   `description`   text NOT NULL COMMENT '描述',
+                                   `author`        varchar(32) NOT NULL DEFAULT '' COMMENT '作者',
+                                   `author_url`    varchar(255) NOT NULL DEFAULT '' COMMENT '作者主页',
+                                   `config`        text NULL COMMENT '配置信息',
+                                   `access`        text NULL COMMENT '授权配置',
+                                   `version`       varchar(16) NOT NULL DEFAULT '' COMMENT '版本号',
+                                   `identifier`    varchar(64) NOT NULL DEFAULT '' COMMENT '模块唯一标识符',
+                                   `system_module` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否为系统模块',
+                                   `create_time`   int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+                                   `update_time`   int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+                                   `sort`          int(11) NOT NULL DEFAULT '100' COMMENT '排序',
+                                   `status`        tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态',
+                                   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='模块表';
 
 -- ----------------------------
 -- Records of dp_admin_module
 -- ----------------------------
-INSERT INTO `dp_admin_module` VALUES ('1', 'admin', '系统', 'fa fa-fw fa-gear', '系统模块，DolphinPHP的核心模块', 'DolphinPHP', 'http://www.dolphinphp.com', '', '', '1.0.0', 'admin.dolphinphp.module', '1', '1468204902', '1468204902', '100', '1');
-INSERT INTO `dp_admin_module` VALUES ('2', 'user', '用户', 'fa fa-fw fa-user', '用户模块，DolphinPHP自带模块', 'DolphinPHP', 'http://www.dolphinphp.com', '', '', '1.0.0', 'user.dolphinphp.module', '1', '1468204902', '1468204902', '100', '1');
+INSERT INTO `dp_admin_module`
+VALUES ('1', 'admin', '系统', 'fa fa-fw fa-gear', '系统模块，thinkphp的核心模块', 'ThinkPHP', 'http://www.thinkphp.cn', '', '', '1.0.0', 'admin.thinkphp.module',
+        '1', '1468204902', '1468204902', '100', '1');
+INSERT INTO `dp_admin_module`
+VALUES ('2', 'user', '用户', 'fa fa-fw fa-user', '用户模块，ThinkPHP自带模块', 'ThinkPHP', 'http://www.thinkphp.cn', '', '', '1.0.0', 'user.thinkphp.module',
+        '1', '1468204902', '1468204902', '100', '1');
 
 -- ----------------------------
 -- Table structure for `dp_admin_packet`
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_packet`;
-CREATE TABLE `dp_admin_packet` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '数据包名',
-  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '数据包标题',
-  `author` varchar(32) NOT NULL DEFAULT '' COMMENT '作者',
+CREATE TABLE `dp_admin_packet`
+(
+    `id`        int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `name`      varchar(32) NOT NULL DEFAULT '' COMMENT '数据包名',
+    `title`     varchar(32) NOT NULL DEFAULT '' COMMENT '数据包标题',
+    `author`    varchar(32) NOT NULL DEFAULT '' COMMENT '作者',
   `author_url` varchar(255) NOT NULL DEFAULT '' COMMENT '作者url',
   `version` varchar(16) NOT NULL,
   `tables` text NOT NULL COMMENT '数据表名',

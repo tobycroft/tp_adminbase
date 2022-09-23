@@ -4,12 +4,12 @@
 namespace app\cms\admin;
 
 use app\admin\controller\Admin;
-use app\common\builder\ZBuilder;
-use app\cms\model\Menu as MenuModel;
 use app\cms\model\Column as ColumnModel;
+use app\cms\model\Menu as MenuModel;
 use app\cms\model\Page as PageModel;
-use util\Tree;
+use app\common\builder\ZBuilder;
 use think\Db;
+use util\Tree;
 
 /**
  * 菜单控制器
@@ -120,7 +120,7 @@ class Menu extends Admin
                 ['select', 'column', '栏目', '<code>必选</code>', ColumnModel::getTreeList(0, false)],
                 ['select', 'page', '单页', '<code>必选</code>', PageModel::getTitleList()],
                 ['text', 'title', '菜单标题', '<code>必填</code>，只用于区分'],
-                ['text', 'url', 'URL', "<code>必填</code>。如果是模块链接，请填写<code>模块/控制器/操作</code>，如：<code>admin/menu/add</code>。如果是普通链接，则直接填写url地址，如：<code>http://www.dolphinphp.com</code>"],
+                ['text', 'url', 'URL', "<code>必填</code>。如果是模块链接，请填写<code>模块/控制器/操作</code>，如：<code>admin/menu/add</code>。如果是普通链接，则直接填写url地址，如：<code>http://www.thinkphp.cn</code>"],
                 ['text', 'css', 'CSS类', '可选'],
                 ['text', 'rel', '链接关系网（XFN）', '可选，即链接的rel值'],
                 ['radio', 'target', '打开方式', '', ['_self' => '当前窗口', '_blank' => '新窗口'], '_self'],
@@ -170,7 +170,7 @@ class Menu extends Admin
                 ['select', 'column', '栏目', '<code>必选</code>', ColumnModel::getTreeList(0, false)],
                 ['select', 'page', '单页', '<code>必选</code>', PageModel::getTitleList()],
                 ['text', 'title', '菜单标题', '<code>必填</code>，只用于区分'],
-                ['text', 'url', 'URL', "<code>必填</code>。如果是模块链接，请填写<code>模块/控制器/操作</code>，如：<code>admin/menu/add</code>。如果是普通链接，则直接填写url地址，如：<code>http://www.dolphinphp.com</code>"],
+                ['text', 'url', 'URL', "<code>必填</code>。如果是模块链接，请填写<code>模块/控制器/操作</code>，如：<code>admin/menu/add</code>。如果是普通链接，则直接填写url地址，如：<code>http://www.thinkphp.cn</code>"],
                 ['text', 'css', 'CSS类', '可选'],
                 ['text', 'rel', '链接关系网（XFN）', '可选，即链接的rel值'],
                 ['radio', 'target', '打开方式', '', ['_self' => '当前窗口', '_blank' => '新窗口'], '_self'],
