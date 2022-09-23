@@ -35,12 +35,13 @@ class Hook extends Model
                     $name = $description;
                     $description = '';
                 }
-                if (self::where('name', $name)->find()) {
+                if (self::where('name', $name)
+                    ->find()) {
                     continue;
                 }
                 $data[] = [
-                    'name'        => $name,
-                    'plugin'      => $plugin_name,
+                    'name' => $name,
+                    'plugin' => $plugin_name,
                     'description' => $description,
                     'create_time' => request()->time(),
                     'update_time' => request()->time(),
@@ -63,7 +64,8 @@ class Hook extends Model
     public static function deleteHooks($plugin_name = '')
     {
         if (!empty($plugin_name)) {
-            if (false === self::where('plugin', $plugin_name)->delete()) {
+            if (false === self::where('plugin', $plugin_name)
+                    ->delete()) {
                 return false;
             }
         }

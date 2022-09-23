@@ -24,7 +24,9 @@ class Action extends Admin
         // 查询
         $map = $this->getMap();
         // 数据列表
-        $data_list = ActionModel::where($map)->order('id desc')->paginate();
+        $data_list = ActionModel::where($map)
+            ->order('id desc')
+            ->paginate();
         // 所有模块的名称和标题
         $list_module = ModuleModel::getModule();
 
@@ -49,7 +51,7 @@ class Action extends Admin
                 ['name', '标识'],
                 ['title', '名称'],
                 ['remark', '描述'],
-                ['module', '所属模块', 'callback', function($module, $list_module){
+                ['module', '所属模块', 'callback', function ($module, $list_module) {
                     return isset($list_module[$module]) ? $list_module[$module] : '未知';
                 }, $list_module],
                 ['status', '状态', 'switch'],

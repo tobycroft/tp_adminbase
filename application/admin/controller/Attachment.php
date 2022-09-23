@@ -27,7 +27,9 @@ class Attachment extends Admin
         $map = $this->getMap();
 
         // 数据列表
-        $data_list = AttachmentModel::where($map)->order('sort asc,id desc')->paginate();
+        $data_list = AttachmentModel::where($map)
+            ->order('sort asc,id desc')
+            ->paginate();
         foreach ($data_list as $key => &$value) {
             if (in_array(strtolower($value['ext']), ['jpg', 'jpeg', 'png', 'gif', 'bmp'])) {
                 if ($value['driver'] == 'local') {
@@ -62,7 +64,9 @@ class Attachment extends Admin
                 ['type', '类型'],
                 ['name', '名称'],
                 ['size', '大小', 'byte'],
-                ['driver', '上传驱动', parse_attr(Db::name('admin_config')->where('name', 'upload_driver')->value('options'))],
+                ['driver', '上传驱动', parse_attr(Db::name('admin_config')
+                    ->where('name', 'upload_driver')
+                    ->value('options'))],
                 ['create_time', '上传时间', 'datetime'],
                 ['status', '状态', 'switch'],
                 ['right_button', '操作', 'btn'],
@@ -97,6 +101,73 @@ class Attachment extends Admin
         }
 
         return $this->saveFile($dir, $from, $module);
+    }
+
+    /**
+     * 处理ueditor上传
+     * @return string|\think\response\Json
+     */
+    private
+    function ueditor()
+    {
+        $action = $this->request->get('action');
+        $config_file = './static/libs/ueditor/php/config.json';
+        $config = json_decode(preg_replace("/\/\*[\s\S]+?\*\//", "", file_get_contents($config_file)), true);
+        switch ($action) {
+            /* 获取配置信息 */
+            case 'config':
+                $result = $config;
+                break;
+
+            /* 上传图片 */
+            case 'uploadimage':
+                return $this->saveFile('images', 'ueditor');
+                break;
+            /* 上传涂鸦 */
+            case 'uploadscrawl':
+                return $this->saveFile('images', 'ueditor_scrawl');
+                break;
+
+            /* 上传视频 */
+            case 'uploadvideo':
+                return $this->saveFile('videos', 'ueditor');
+                break;
+
+            /* 上传附件 */
+            case 'uploadfile':
+                return $this->saveFile('files', 'ueditor');
+                break;
+
+            /* 列出图片 */
+            case 'listimage':
+                return $this->showFile('listimage', $config);
+                break;
+
+            /* 列出附件 */
+            case 'listfile':
+                return $this->showFile('listfile', $config);
+                break;
+
+            /* 抓取远程附件 */
+//            case 'catchimage':
+            //                $result = include("action_crawler.php");
+            //                break;
+
+            default:
+                $result = ['state' => '请求地址出错'];
+                break;
+        }
+
+        /* 输出结果 */
+        if (isset($_GET["callback"])) {
+            if (preg_match("/^[\w_]+$/", $_GET["callback"])) {
+                return htmlspecialchars($_GET["callback"]) . '(' . $result . ')';
+            } else {
+                return json(['state' => 'callback参数不合法']);
+            }
+        } else {
+            return json($result);
+        }
     }
 
     /**
@@ -208,7 +279,8 @@ class Attachment extends Admin
                 // 生成缩略图
                 if ($thumb == '') {
                     if (config('upload_image_thumb') != '') {
-                        $thumb_path_name = $this->create_thumb($info, $info->getPathInfo()->getfileName(), $info->getFilename());
+                        $thumb_path_name = $this->create_thumb($info, $info->getPathInfo()
+                            ->getfileName(), $info->getFilename());
                         $thumb_ret = $Aoss->send($thumb_path_name, $file->getMime(), $info->getFilename());
                         if (isset($thumb_ret->error)) {
                             return $this->uploadError($from, $thumb_ret->error, $callback);
@@ -220,7 +292,8 @@ class Attachment extends Admin
 
                     if (strtolower($thumb) != 'close') {
                         list($thumb_size, $thumb_type) = explode('|', $thumb);
-                        $thumb_path_name = $this->create_thumb($info, $info->getPathInfo()->getfileName(), $info->getFilename(), $thumb_size, $thumb_type);
+                        $thumb_path_name = $this->create_thumb($info, $info->getPathInfo()
+                            ->getfileName(), $info->getFilename(), $thumb_size, $thumb_type);
                         $thumb_ret = $Aoss->send($thumb_path_name, $file->getMime(), $info->getFilename());
                         if (isset($thumb_ret->error)) {
                             return $this->uploadError($from, $thumb_ret->error, $callback);
@@ -271,73 +344,6 @@ class Attachment extends Admin
     }
 
     /**
-     * 处理ueditor上传
-     * @return string|\think\response\Json
-     */
-    private
-    function ueditor()
-    {
-        $action = $this->request->get('action');
-        $config_file = './static/libs/ueditor/php/config.json';
-        $config = json_decode(preg_replace("/\/\*[\s\S]+?\*\//", "", file_get_contents($config_file)), true);
-        switch ($action) {
-            /* 获取配置信息 */
-            case 'config':
-                $result = $config;
-                break;
-
-            /* 上传图片 */
-            case 'uploadimage':
-                return $this->saveFile('images', 'ueditor');
-                break;
-            /* 上传涂鸦 */
-            case 'uploadscrawl':
-                return $this->saveFile('images', 'ueditor_scrawl');
-                break;
-
-            /* 上传视频 */
-            case 'uploadvideo':
-                return $this->saveFile('videos', 'ueditor');
-                break;
-
-            /* 上传附件 */
-            case 'uploadfile':
-                return $this->saveFile('files', 'ueditor');
-                break;
-
-            /* 列出图片 */
-            case 'listimage':
-                return $this->showFile('listimage', $config);
-                break;
-
-            /* 列出附件 */
-            case 'listfile':
-                return $this->showFile('listfile', $config);
-                break;
-
-            /* 抓取远程附件 */
-//            case 'catchimage':
-            //                $result = include("action_crawler.php");
-            //                break;
-
-            default:
-                $result = ['state' => '请求地址出错'];
-                break;
-        }
-
-        /* 输出结果 */
-        if (isset($_GET["callback"])) {
-            if (preg_match("/^[\w_]+$/", $_GET["callback"])) {
-                return htmlspecialchars($_GET["callback"]) . '(' . $result . ')';
-            } else {
-                return json(['state' => 'callback参数不合法']);
-            }
-        } else {
-            return json($result);
-        }
-    }
-
-    /**
      * 保存涂鸦（ueditor）
      * @return \think\response\Json
      */
@@ -383,251 +389,6 @@ class Attachment extends Admin
             ]);
         } else {
             return json(['state' => '涂鸦上传出错']);
-        }
-    }
-
-    /**
-     * 显示附件列表（ueditor）
-     * @param string $type 类型
-     * @param $config
-     * @return \think\response\Json
-     */
-    private
-    function showFile($type, $config)
-    {
-        /* 判断类型 */
-        switch ($type) {
-            /* 列出附件 */
-            case 'listfile':
-                $allowFiles = $config['fileManagerAllowFiles'];
-                $listSize = $config['fileManagerListSize'];
-                $path = realpath(config('upload_path') . '/files/');
-                break;
-            /* 列出图片 */
-            case 'listimage':
-            default:
-                $allowFiles = $config['imageManagerAllowFiles'];
-                $listSize = $config['imageManagerListSize'];
-                $path = realpath(config('upload_path') . '/images/');
-        }
-        $allowFiles = substr(str_replace(".", "|", join("", $allowFiles)), 1);
-
-        /* 获取参数 */
-        $size = isset($_GET['size']) ? htmlspecialchars($_GET['size']) : $listSize;
-        $start = isset($_GET['start']) ? htmlspecialchars($_GET['start']) : 0;
-        $end = $start + $size;
-
-        /* 获取附件列表 */
-        $files = $this->getfiles($path, $allowFiles);
-        if (!count($files)) {
-            return json(array(
-                "state" => "no match file",
-                "list" => array(),
-                "start" => $start,
-                "total" => count($files),
-            ));
-        }
-
-        /* 获取指定范围的列表 */
-        $len = count($files);
-        for ($i = min($end, $len) - 1, $list = array(); $i < $len && $i >= 0 && $i >= $start; $i--) {
-            $list[] = $files[$i];
-        }
-        //倒序
-        //for ($i = $end, $list = array(); $i < $len && $i < $end; $i++){
-        //    $list[] = $files[$i];
-        //}
-
-        /* 返回数据 */
-        $result = array(
-            "state" => "SUCCESS",
-            "list" => $list,
-            "start" => $start,
-            "total" => count($files),
-        );
-
-        return json($result);
-    }
-
-    /**
-     * 处理Jcrop图片裁剪
-     */
-    private function jcrop()
-    {
-        $file_path = $this->request->post('path', '');
-        $cut_info = $this->request->post('cut', '');
-        $thumb = $this->request->post('thumb', '');
-        $watermark = $this->request->post('watermark', '');
-        $module = $this->request->param('module', '');
-
-        // 上传图片
-        if ($file_path == '') {
-            $file = $this->request->file('file');
-
-            // 附件类型限制
-            $ext_limit = config('upload_image_ext');
-            $ext_limit = $ext_limit != '' ? parse_attr($ext_limit) : '';
-
-            // 判断附件格式是否符合
-            $file_name = $file->getInfo('name');
-            $file_ext = strtolower(substr($file_name, strrpos($file_name, '.') + 1));
-
-            if ($ext_limit == '') {
-                $this->error('获取文件信息失败！');
-            }
-            if (strtolower($file_ext) == 'php') {
-                $this->error('禁止上传非法文件！');
-            }
-            if ($file->getMime() == 'text/x-php' || $file->getMime() == 'text/html') {
-                $this->error('禁止上传非法文件！');
-            }
-            if (preg_grep("/php/i", $ext_limit)) {
-                $this->error('禁止上传非法文件！');
-            }
-            if (!preg_grep("/$file_ext/i", $ext_limit)) {
-                $this->error('附件类型不正确！');
-            }
-
-            if (!is_dir(config('upload_temp_path'))) {
-                mkdir(config('upload_temp_path'), 0766, true);
-            }
-            $info = $file->move(config('upload_temp_path'), $file->hash('md5'));
-            if ($info) {
-                return json(['code' => 1, 'src' => PUBLIC_PATH . 'uploads/temp/' . $info->getFilename()]);
-            } else {
-                $this->error('上传失败');
-            }
-        }
-
-        $file_path = config('upload_temp_path') . str_replace(PUBLIC_PATH . 'uploads/temp/', '', $file_path);
-
-        if (is_file($file_path)) {
-            // 获取裁剪信息
-            $cut_info = explode(',', $cut_info);
-
-            // 读取图片
-            $image = Image::open($file_path);
-
-            $dir_name = date('Ymd');
-            $file_dir = config('upload_path') . DIRECTORY_SEPARATOR . 'images/' . $dir_name . '/';
-            if (!is_dir($file_dir)) {
-                mkdir($file_dir, 0766, true);
-            }
-            $file_name = md5(microtime(true)) . '.' . $image->type();
-            $new_file_path = $file_dir . $file_name;
-
-            // 裁剪图片
-            $image->crop($cut_info[0], $cut_info[1], $cut_info[2], $cut_info[3], $cut_info[4], $cut_info[5])->save($new_file_path);
-
-            // 水印功能
-            if ($watermark == '') {
-                if (config('upload_thumb_water') == 1 && config('upload_thumb_water_pic') > 0) {
-                    $this->create_water($new_file_path, config('upload_thumb_water_pic'));
-                }
-            } else {
-                if (strtolower($watermark) != 'close') {
-                    list($watermark_img, $watermark_pos, $watermark_alpha) = explode('|', $watermark);
-                    $this->create_water($new_file_path, $watermark_img, $watermark_pos, $watermark_alpha);
-                }
-            }
-
-            // 是否创建缩略图
-            $thumb_path_name = '';
-            if ($thumb == '') {
-                if (config('upload_image_thumb') != '') {
-                    $thumb_path_name = $this->create_thumb($new_file_path, $dir_name, $file_name);
-                }
-            } else {
-                if (strtolower($thumb) != 'close') {
-                    list($thumb_size, $thumb_type) = explode('|', $thumb);
-                    $thumb_path_name = $this->create_thumb($new_file_path, $dir_name, $file_name, $thumb_size, $thumb_type);
-                }
-            }
-
-            // 保存图片
-            $file = new File($new_file_path);
-            $file_info = [
-                'uid' => session('user_auth.uid'),
-                'name' => $file_name,
-                'mime' => $image->mime(),
-                'path' => 'uploads/images/' . $dir_name . '/' . $file_name,
-                'ext' => $image->type(),
-                'size' => $file->getSize(),
-                'md5' => $file->hash('md5'),
-                'sha1' => $file->hash('sha1'),
-                'thumb' => $thumb_path_name,
-                'module' => $module,
-                'width' => $image->width(),
-                'height' => $image->height(),
-            ];
-
-            if ($file_add = AttachmentModel::create($file_info)) {
-                // 删除临时图片
-                unlink($file_path);
-                // 返回成功信息
-                return json([
-                    'code' => 1,
-                    'id' => $file_add['id'],
-                    'src' => PUBLIC_PATH . $file_info['path'],
-                    'thumb' => $thumb_path_name == '' ? '' : PUBLIC_PATH . $thumb_path_name,
-                ]);
-            } else {
-                $this->error('上传失败');
-            }
-        }
-        $this->error('文件不存在');
-    }
-
-    /**
-     * 创建缩略图
-     * @param string $file 目标文件，可以是文件对象或文件路径
-     * @param string $dir 保存目录，即目标文件所在的目录名
-     * @param string $save_name 缩略图名
-     * @param string $thumb_size 尺寸
-     * @param string $thumb_type 裁剪类型
-     * @return string 缩略图路径
-     */
-    private function create_thumb($file = '', $dir = '', $save_name = '', $thumb_size = '', $thumb_type = '')
-    {
-        // 获取要生成的缩略图最大宽度和高度
-        $thumb_size = $thumb_size == '' ? config('upload_image_thumb') : $thumb_size;
-        list($thumb_max_width, $thumb_max_height) = explode(',', $thumb_size);
-        // 读取图片
-        $image = Image::open($file);
-        // 生成缩略图
-        $thumb_type = $thumb_type == '' ? config('upload_image_thumb_type') : $thumb_type;
-        $image->thumb($thumb_max_width, $thumb_max_height, $thumb_type);
-        // 保存缩略图
-        $thumb_path = config('upload_path') . DIRECTORY_SEPARATOR . 'images/' . $dir . '/thumb/';
-        if (!is_dir($thumb_path)) {
-            mkdir($thumb_path, 0766, true);
-        }
-        $thumb_path_name = $thumb_path . $save_name;
-        $image->save($thumb_path_name);
-        $thumb_path_name = 'uploads/images/' . $dir . '/thumb/' . $save_name;
-        return $thumb_path_name;
-    }
-
-    /**
-     * 添加水印
-     * @param string $file 要添加水印的文件路径
-     * @param string $watermark_img 水印图片id
-     * @param string $watermark_pos 水印位置
-     * @param string $watermark_alpha 水印透明度
-     */
-    private function create_water($file = '', $watermark_img = '', $watermark_pos = '', $watermark_alpha = '')
-    {
-        $path = model('admin/attachment')->getFilePath($watermark_img, 1);
-        $thumb_water_pic = realpath(Env::get('root_path') . 'public/' . $path);
-        if (is_file($thumb_water_pic)) {
-            // 读取图片
-            $image = Image::open($file);
-            // 添加水印
-            $watermark_pos = $watermark_pos == '' ? config('upload_thumb_water_position') : $watermark_pos;
-            $watermark_alpha = $watermark_alpha == '' ? config('upload_thumb_water_alpha') : $watermark_alpha;
-            $image->water($thumb_water_pic, $watermark_pos, $watermark_alpha);
-            // 保存水印图片，覆盖原图
-            $image->save($file);
         }
     }
 
@@ -711,6 +472,122 @@ class Attachment extends Admin
     }
 
     /**
+     * 添加水印
+     * @param string $file 要添加水印的文件路径
+     * @param string $watermark_img 水印图片id
+     * @param string $watermark_pos 水印位置
+     * @param string $watermark_alpha 水印透明度
+     */
+    private function create_water($file = '', $watermark_img = '', $watermark_pos = '', $watermark_alpha = '')
+    {
+        $path = model('admin/attachment')->getFilePath($watermark_img, 1);
+        $thumb_water_pic = realpath(Env::get('root_path') . 'public/' . $path);
+        if (is_file($thumb_water_pic)) {
+            // 读取图片
+            $image = Image::open($file);
+            // 添加水印
+            $watermark_pos = $watermark_pos == '' ? config('upload_thumb_water_position') : $watermark_pos;
+            $watermark_alpha = $watermark_alpha == '' ? config('upload_thumb_water_alpha') : $watermark_alpha;
+            $image->water($thumb_water_pic, $watermark_pos, $watermark_alpha);
+            // 保存水印图片，覆盖原图
+            $image->save($file);
+        }
+    }
+
+    /**
+     * 创建缩略图
+     * @param string $file 目标文件，可以是文件对象或文件路径
+     * @param string $dir 保存目录，即目标文件所在的目录名
+     * @param string $save_name 缩略图名
+     * @param string $thumb_size 尺寸
+     * @param string $thumb_type 裁剪类型
+     * @return string 缩略图路径
+     */
+    private function create_thumb($file = '', $dir = '', $save_name = '', $thumb_size = '', $thumb_type = '')
+    {
+        // 获取要生成的缩略图最大宽度和高度
+        $thumb_size = $thumb_size == '' ? config('upload_image_thumb') : $thumb_size;
+        list($thumb_max_width, $thumb_max_height) = explode(',', $thumb_size);
+        // 读取图片
+        $image = Image::open($file);
+        // 生成缩略图
+        $thumb_type = $thumb_type == '' ? config('upload_image_thumb_type') : $thumb_type;
+        $image->thumb($thumb_max_width, $thumb_max_height, $thumb_type);
+        // 保存缩略图
+        $thumb_path = config('upload_path') . DIRECTORY_SEPARATOR . 'images/' . $dir . '/thumb/';
+        if (!is_dir($thumb_path)) {
+            mkdir($thumb_path, 0766, true);
+        }
+        $thumb_path_name = $thumb_path . $save_name;
+        $image->save($thumb_path_name);
+        $thumb_path_name = 'uploads/images/' . $dir . '/thumb/' . $save_name;
+        return $thumb_path_name;
+    }
+
+    /**
+     * 显示附件列表（ueditor）
+     * @param string $type 类型
+     * @param $config
+     * @return \think\response\Json
+     */
+    private
+    function showFile($type, $config)
+    {
+        /* 判断类型 */
+        switch ($type) {
+            /* 列出附件 */
+            case 'listfile':
+                $allowFiles = $config['fileManagerAllowFiles'];
+                $listSize = $config['fileManagerListSize'];
+                $path = realpath(config('upload_path') . '/files/');
+                break;
+            /* 列出图片 */
+            case 'listimage':
+            default:
+                $allowFiles = $config['imageManagerAllowFiles'];
+                $listSize = $config['imageManagerListSize'];
+                $path = realpath(config('upload_path') . '/images/');
+        }
+        $allowFiles = substr(str_replace(".", "|", join("", $allowFiles)), 1);
+
+        /* 获取参数 */
+        $size = isset($_GET['size']) ? htmlspecialchars($_GET['size']) : $listSize;
+        $start = isset($_GET['start']) ? htmlspecialchars($_GET['start']) : 0;
+        $end = $start + $size;
+
+        /* 获取附件列表 */
+        $files = $this->getfiles($path, $allowFiles);
+        if (!count($files)) {
+            return json(array(
+                "state" => "no match file",
+                "list" => array(),
+                "start" => $start,
+                "total" => count($files),
+            ));
+        }
+
+        /* 获取指定范围的列表 */
+        $len = count($files);
+        for ($i = min($end, $len) - 1, $list = array(); $i < $len && $i >= 0 && $i >= $start; $i--) {
+            $list[] = $files[$i];
+        }
+        //倒序
+        //for ($i = $end, $list = array(); $i < $len && $i < $end; $i++){
+        //    $list[] = $files[$i];
+        //}
+
+        /* 返回数据 */
+        $result = array(
+            "state" => "SUCCESS",
+            "list" => $list,
+            "start" => $start,
+            "total" => count($files),
+        );
+
+        return json($result);
+    }
+
+    /**
      * 遍历获取目录下的指定类型的附件
      * @param string $path 路径
      * @param string $allowFiles 允许查看的类型
@@ -748,6 +625,136 @@ class Attachment extends Admin
     }
 
     /**
+     * 处理Jcrop图片裁剪
+     */
+    private function jcrop()
+    {
+        $file_path = $this->request->post('path', '');
+        $cut_info = $this->request->post('cut', '');
+        $thumb = $this->request->post('thumb', '');
+        $watermark = $this->request->post('watermark', '');
+        $module = $this->request->param('module', '');
+
+        // 上传图片
+        if ($file_path == '') {
+            $file = $this->request->file('file');
+
+            // 附件类型限制
+            $ext_limit = config('upload_image_ext');
+            $ext_limit = $ext_limit != '' ? parse_attr($ext_limit) : '';
+
+            // 判断附件格式是否符合
+            $file_name = $file->getInfo('name');
+            $file_ext = strtolower(substr($file_name, strrpos($file_name, '.') + 1));
+
+            if ($ext_limit == '') {
+                $this->error('获取文件信息失败！');
+            }
+            if (strtolower($file_ext) == 'php') {
+                $this->error('禁止上传非法文件！');
+            }
+            if ($file->getMime() == 'text/x-php' || $file->getMime() == 'text/html') {
+                $this->error('禁止上传非法文件！');
+            }
+            if (preg_grep("/php/i", $ext_limit)) {
+                $this->error('禁止上传非法文件！');
+            }
+            if (!preg_grep("/$file_ext/i", $ext_limit)) {
+                $this->error('附件类型不正确！');
+            }
+
+            if (!is_dir(config('upload_temp_path'))) {
+                mkdir(config('upload_temp_path'), 0766, true);
+            }
+            $info = $file->move(config('upload_temp_path'), $file->hash('md5'));
+            if ($info) {
+                return json(['code' => 1, 'src' => PUBLIC_PATH . 'uploads/temp/' . $info->getFilename()]);
+            } else {
+                $this->error('上传失败');
+            }
+        }
+
+        $file_path = config('upload_temp_path') . str_replace(PUBLIC_PATH . 'uploads/temp/', '', $file_path);
+
+        if (is_file($file_path)) {
+            // 获取裁剪信息
+            $cut_info = explode(',', $cut_info);
+
+            // 读取图片
+            $image = Image::open($file_path);
+
+            $dir_name = date('Ymd');
+            $file_dir = config('upload_path') . DIRECTORY_SEPARATOR . 'images/' . $dir_name . '/';
+            if (!is_dir($file_dir)) {
+                mkdir($file_dir, 0766, true);
+            }
+            $file_name = md5(microtime(true)) . '.' . $image->type();
+            $new_file_path = $file_dir . $file_name;
+
+            // 裁剪图片
+            $image->crop($cut_info[0], $cut_info[1], $cut_info[2], $cut_info[3], $cut_info[4], $cut_info[5])
+                ->save($new_file_path);
+
+            // 水印功能
+            if ($watermark == '') {
+                if (config('upload_thumb_water') == 1 && config('upload_thumb_water_pic') > 0) {
+                    $this->create_water($new_file_path, config('upload_thumb_water_pic'));
+                }
+            } else {
+                if (strtolower($watermark) != 'close') {
+                    list($watermark_img, $watermark_pos, $watermark_alpha) = explode('|', $watermark);
+                    $this->create_water($new_file_path, $watermark_img, $watermark_pos, $watermark_alpha);
+                }
+            }
+
+            // 是否创建缩略图
+            $thumb_path_name = '';
+            if ($thumb == '') {
+                if (config('upload_image_thumb') != '') {
+                    $thumb_path_name = $this->create_thumb($new_file_path, $dir_name, $file_name);
+                }
+            } else {
+                if (strtolower($thumb) != 'close') {
+                    list($thumb_size, $thumb_type) = explode('|', $thumb);
+                    $thumb_path_name = $this->create_thumb($new_file_path, $dir_name, $file_name, $thumb_size, $thumb_type);
+                }
+            }
+
+            // 保存图片
+            $file = new File($new_file_path);
+            $file_info = [
+                'uid' => session('user_auth.uid'),
+                'name' => $file_name,
+                'mime' => $image->mime(),
+                'path' => 'uploads/images/' . $dir_name . '/' . $file_name,
+                'ext' => $image->type(),
+                'size' => $file->getSize(),
+                'md5' => $file->hash('md5'),
+                'sha1' => $file->hash('sha1'),
+                'thumb' => $thumb_path_name,
+                'module' => $module,
+                'width' => $image->width(),
+                'height' => $image->height(),
+            ];
+
+            if ($file_add = AttachmentModel::create($file_info)) {
+                // 删除临时图片
+                unlink($file_path);
+                // 返回成功信息
+                return json([
+                    'code' => 1,
+                    'id' => $file_add['id'],
+                    'src' => PUBLIC_PATH . $file_info['path'],
+                    'thumb' => $thumb_path_name == '' ? '' : PUBLIC_PATH . $thumb_path_name,
+                ]);
+            } else {
+                $this->error('上传失败');
+            }
+        }
+        $this->error('文件不存在');
+    }
+
+    /**
      * 启用附件
      * @param array $record 行为日志
      * @return mixed
@@ -756,17 +763,6 @@ class Attachment extends Admin
     function enable($record = [])
     {
         return $this->setStatus('enable');
-    }
-
-    /**
-     * 禁用附件
-     * @param array $record 行为日志
-     * @return mixed
-     */
-    public
-    function disable($record = [])
-    {
-        return $this->setStatus('disable');
     }
 
     /**
@@ -785,6 +781,17 @@ class Attachment extends Admin
     }
 
     /**
+     * 禁用附件
+     * @param array $record 行为日志
+     * @return mixed
+     */
+    public
+    function disable($record = [])
+    {
+        return $this->setStatus('disable');
+    }
+
+    /**
      * 删除附件
      * @param string $ids 附件id
      * @throws \think\Exception
@@ -798,7 +805,8 @@ class Attachment extends Admin
             $this->error('缺少主键');
         }
 
-        $files_path = AttachmentModel::where('id', 'in', $ids)->column('path,thumb', 'id');
+        $files_path = AttachmentModel::where('id', 'in', $ids)
+            ->column('path,thumb', 'id');
 
         foreach ($files_path as $value) {
             $real_path = realpath(config('upload_path') . '/../' . $value['path']);
@@ -811,7 +819,8 @@ class Attachment extends Admin
                 $this->error('删除缩略图失败');
             }
         }
-        if (AttachmentModel::where('id', 'in', $ids)->delete()) {
+        if (AttachmentModel::where('id', 'in', $ids)
+            ->delete()) {
             // 记录行为
             $ids = is_array($ids) ? implode(',', $ids) : $ids;
             action_log('attachment_delete', 'admin_attachment', 0, UID, $ids);

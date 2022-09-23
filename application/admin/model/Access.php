@@ -16,34 +16,6 @@ class Access extends Model
     protected $name = 'admin_access';
 
     /**
-     * 获取用户授权节点
-     * @param int $uid 用户id
-     * @param string $group 权限分组，可以以点分开模型名称和分组名称，如user.group
-     * @return array|bool
-     */
-    public function getAuthNode($uid = 0, $group = '')
-    {
-        if ($uid == 0 || $group == '') {
-            $this->error = '缺少参数';
-            return false;
-        }
-
-        if (strpos($group, '.')) {
-            list($module, $group) = explode('.', $group);
-        } else {
-            $module = Request::module();
-        }
-
-        $map = [
-            'module' => $module,
-            'group'  => $group,
-            'uid'    => $uid
-        ];
-
-        return $this->where($map)->column('nid');
-    }
-
-    /**
      * 检查用户的某个节点是否授权
      * @param int $uid 用户id
      * @param string $group $group 权限分组，可以以点分开模型名称和分组名称，如user.group
@@ -71,5 +43,34 @@ class Access extends Model
             $this->error = '未授权';
             return false;
         }
+    }
+
+    /**
+     * 获取用户授权节点
+     * @param int $uid 用户id
+     * @param string $group 权限分组，可以以点分开模型名称和分组名称，如user.group
+     * @return array|bool
+     */
+    public function getAuthNode($uid = 0, $group = '')
+    {
+        if ($uid == 0 || $group == '') {
+            $this->error = '缺少参数';
+            return false;
+        }
+
+        if (strpos($group, '.')) {
+            list($module, $group) = explode('.', $group);
+        } else {
+            $module = Request::module();
+        }
+
+        $map = [
+            'module' => $module,
+            'group' => $group,
+            'uid' => $uid
+        ];
+
+        return $this->where($map)
+            ->column('nid');
     }
 }

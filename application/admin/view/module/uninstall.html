@@ -7,16 +7,17 @@
             <div class="block-header bg-gray-lighter">
                 <ul class="block-options">
                     <li>
-                        <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"></button>
+                        <button data-action="fullscreen_toggle" data-toggle="block-option" type="button"></button>
                     </li>
                     <li>
-                        <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                        <button data-action="refresh_toggle" data-action-mode="demo" data-toggle="block-option" type="button"><i class="si si-refresh"></i>
+                        </button>
                     </li>
                     <li>
-                        <button type="button" data-toggle="block-option" data-action="content_toggle"></button>
+                        <button data-action="content_toggle" data-toggle="block-option" type="button"></button>
                     </li>
                     <li>
-                        <button type="button" data-toggle="block-option" data-action="close"><i class="si si-close"></i></button>
+                        <button data-action="close" data-toggle="block-option" type="button"><i class="si si-close"></i></button>
                     </li>
                 </ul>
                 <h3 class="block-title">{$page_title|default=""}</h3>
@@ -25,18 +26,18 @@
             <div class="block-content tab-content">
                 <div class="tab-pane active">
                     <div class="block-content">
-                        <form class="form-horizontal form-builder" action="{:url('uninstall')}" method="get">
-                            <input type="hidden" name="name" value="{$name|default=''}">
-                            <input type="hidden" name="confirm" value="1">
+                        <form action="{:url('uninstall')}" class="form-horizontal form-builder" method="get">
+                            <input name="name" type="hidden" value="{$name|default=''}">
+                            <input name="confirm" type="hidden" value="1">
                             <div class="form-group " id="form_group_group">
                                 <h4 class="col-xs-12 push-10">是否清除数据</h4>
                                 <div class="col-xs-9">
                                     <label class="css-input css-radio css-radio-primary css-radio-sm push-10-r">
-                                        <input type="radio" name="clear" id="clear1" value="0" checked="">
+                                        <input checked="" id="clear1" name="clear" type="radio" value="0">
                                         <span></span> 否
                                     </label>
                                     <label class="css-input css-radio css-radio-primary css-radio-sm push-10-r">
-                                        <input type="radio" name="clear" id="clear2" value="1">
+                                        <input id="clear2" name="clear" type="radio" value="1">
                                         <span></span> 是
                                     </label>
                                     <div class="help-block">
@@ -46,10 +47,10 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-12">
-                                    <button class="btn btn-minw btn-danger" type="submit" id="uninstall">
-                                    卸载
+                                    <button class="btn btn-minw btn-danger" id="uninstall" type="submit">
+                                        卸载
                                     </button>
-                                    <button class="btn btn-default" type="button" onclick="javascript:history.back(-1);return false;">
+                                    <button class="btn btn-default" onclick="javascript:history.back(-1);return false;" type="button">
                                         返回
                                     </button>
                                 </div>

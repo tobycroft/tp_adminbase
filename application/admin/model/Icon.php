@@ -18,15 +18,6 @@ class Icon extends Model
     protected $autoWriteTimestamp = true;
 
     /**
-     * 图标列表
-     * @return \think\model\relation\HasMany
-     */
-    public function icons()
-    {
-        return $this->hasMany('IconList', 'icon_id')->field('title,class,code');
-    }
-
-    /**
      * 获取图标css链接
      * @return array|string|\think\Collection
      * @throws \think\db\exception\DataNotFoundException
@@ -35,13 +26,14 @@ class Icon extends Model
      */
     public static function getUrls()
     {
-        $list = self::where('status', 1)->select();
+        $list = self::where('status', 1)
+            ->select();
         if ($list) {
             foreach ($list as $key => $item) {
                 if ($item['icons']) {
                     $html = '<ul class="js-icon-list items-push-2x text-center">';
                     foreach ($item['icons'] as $icon) {
-                        $html .= '<li title="'.$icon['title'].'"><i class="'.$icon['class'].'"></i> <code>'.$icon['code'].'</code></li>';
+                        $html .= '<li title="' . $icon['title'] . '"><i class="' . $icon['class'] . '"></i> <code>' . $icon['code'] . '</code></li>';
                     }
                     $html .= '</ul>';
                 } else {
@@ -51,5 +43,15 @@ class Icon extends Model
             }
         }
         return $list;
+    }
+
+    /**
+     * 图标列表
+     * @return \think\model\relation\HasMany
+     */
+    public function icons()
+    {
+        return $this->hasMany('IconList', 'icon_id')
+            ->field('title,class,code');
     }
 }

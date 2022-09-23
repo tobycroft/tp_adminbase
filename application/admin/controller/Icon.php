@@ -29,14 +29,14 @@ class Icon extends Admin
             ->addTopButtons('add,enable,disable,delete')
             ->addRightButton('list', [
                 'title' => '图标列表',
-                'icon'  => 'fa fa-list',
-                'href'  => url('items', ['id' => '__id__'])
+                'icon' => 'fa fa-list',
+                'href' => url('items', ['id' => '__id__'])
             ])
             ->addRightButton('reload', [
                 'title' => '更新图标',
-                'icon'  => 'fa fa-refresh',
+                'icon' => 'fa fa-refresh',
                 'class' => 'btn btn-xs btn-default ajax-get confirm',
-                'href'  => url('reload', ['id' => '__id__'])
+                'href' => url('reload', ['id' => '__id__'])
             ])
             ->addRightButton('delete')
             ->setSearch('name')
@@ -68,7 +68,7 @@ class Icon extends Admin
             $data['update_time'] = $this->request->time();
 
             // 获取图标信息
-            $url = substr($data['url'], 0, 4) == 'http' ? $data['url'] : 'http:'.$data['url'];
+            $url = substr($data['url'], 0, 4) == 'http' ? $data['url'] : 'http:' . $data['url'];
             $content = file_get_contents($url);
 
             // 获取字体名
@@ -89,16 +89,17 @@ class Icon extends Admin
                     foreach ($matches[1] as $match) {
                         $icon_list[] = [
                             'icon_id' => $id,
-                            'title'   => $match,
-                            'class'   => $font_family . ' ' . $match,
-                            'code'    => $match,
+                            'title' => $match,
+                            'class' => $font_family . ' ' . $match,
+                            'code' => $match,
                         ];
                     }
                     $IconListModel = new IconListModel();
                     if ($IconListModel->saveAll($icon_list)) {
                         $this->success('新增成功', 'index');
                     } else {
-                        $IconModel->where('id', $id)->delete();
+                        $IconModel->where('id', $id)
+                            ->delete();
                         $this->error('图标添加失败');
                     }
                 }
@@ -114,6 +115,29 @@ class Icon extends Admin
                 ['text', 'url', '链接', '如：//at.alicdn.com/t/font_588968_z5hsg7xluoh41jor.css'],
             ])
             ->fetch();
+    }
+
+    /**
+     * 删除图标库
+     * @param string $ids
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function delete($ids = '')
+    {
+        $ids == '' && $this->error('请选择要删除的数据');
+        $ids = (array)$ids;
+
+        // 删除图标列表
+        if (false !== IconListModel::where('icon_id', 'in', $ids)
+                ->delete()) {
+            // 删除图标库
+            if (false !== IconModel::where('id', 'in', $ids)
+                    ->delete()) {
+                $this->success('删除成功');
+            }
+        }
+        $this->error('删除失败');
     }
 
     /**
@@ -135,14 +159,14 @@ class Icon extends Admin
             ->addTopButtons('back')
             ->addTopButton('add', [
                 'title' => '更新图标',
-                'icon'  => 'fa fa-refresh',
+                'icon' => 'fa fa-refresh',
                 'class' => 'btn btn-primary ajax-get confirm',
-                'href'  => url('reload', ['id' => $id])
+                'href' => url('reload', ['id' => $id])
             ])
             ->setSearch('title,code')
             ->addColumns([
-                ['icon', '图标', 'callback', function($data){
-                    return '<i class="'.$data['class'].'"></i>';
+                ['icon', '图标', 'callback', function ($data) {
+                    return '<i class="' . $data['class'] . '"></i>';
                 }, '__data__'],
                 ['title', '图标标题', 'text.edit'],
                 ['code', '图标关键词', 'text.edit'],
@@ -162,7 +186,7 @@ class Icon extends Admin
     {
         $icon = IconModel::get($id);
         // 获取图标信息
-        $url = substr($icon['url'], 0, 4) == 'http' ? $icon['url'] : 'http:'.$icon['url'];
+        $url = substr($icon['url'], 0, 4) == 'http' ? $icon['url'] : 'http:' . $icon['url'];
         $content = file_get_contents($url);
 
         // 获取字体名
@@ -181,13 +205,14 @@ class Icon extends Admin
             foreach ($matches[1] as $match) {
                 $icon_list[] = [
                     'icon_id' => $id,
-                    'title'   => $match,
-                    'class'   => $font_family . ' ' . $match,
-                    'code'    => $match,
+                    'title' => $match,
+                    'class' => $font_family . ' ' . $match,
+                    'code' => $match,
                 ];
             }
             $IconListModel = new IconListModel();
-            $IconListModel->where('icon_id', $id)->delete();
+            $IconListModel->where('icon_id', $id)
+                ->delete();
             if ($IconListModel->saveAll($icon_list)) {
                 $this->success('更新成功');
             } else {
@@ -195,26 +220,5 @@ class Icon extends Admin
             }
         }
         $this->success('更新成功');
-    }
-
-    /**
-     * 删除图标库
-     * @param string $ids
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
-     */
-    public function delete($ids = '')
-    {
-        $ids == '' && $this->error('请选择要删除的数据');
-        $ids = (array)$ids;
-
-        // 删除图标列表
-        if (false !== IconListModel::where('icon_id', 'in', $ids)->delete()) {
-            // 删除图标库
-            if (false !== IconModel::where('id', 'in', $ids)->delete()) {
-                $this->success('删除成功');
-            }
-        }
-        $this->error('删除失败');
     }
 }

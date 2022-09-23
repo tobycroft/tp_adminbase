@@ -7,16 +7,17 @@
             <div class="block-header bg-gray-lighter">
                 <ul class="block-options">
                     <li>
-                        <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"></button>
+                        <button data-action="fullscreen_toggle" data-toggle="block-option" type="button"></button>
                     </li>
                     <li>
-                        <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                        <button data-action="refresh_toggle" data-action-mode="demo" data-toggle="block-option" type="button"><i class="si si-refresh"></i>
+                        </button>
                     </li>
                     <li>
-                        <button type="button" data-toggle="block-option" data-action="content_toggle"></button>
+                        <button data-action="content_toggle" data-toggle="block-option" type="button"></button>
                     </li>
                     <li>
-                        <button type="button" data-toggle="block-option" data-action="close"><i class="si si-close"></i></button>
+                        <button data-action="close" data-toggle="block-option" type="button"><i class="si si-close"></i></button>
                     </li>
                 </ul>
                 <h3 class="block-title">{$page_title|default=""}</h3>
@@ -25,9 +26,9 @@
             <div class="block-content tab-content">
                 <div class="tab-pane active">
                     <div class="block-content">
-                        <form class="form-horizontal form-builder" action="{:url('install')}" method="get">
-                            <input type="hidden" name="name" value="{$name|default=''}">
-                            <input type="hidden" name="confirm" value="1">
+                        <form action="{:url('install')}" class="form-horizontal form-builder" method="get">
+                            <input name="name" type="hidden" value="{$name|default=''}">
+                            <input name="confirm" type="hidden" value="1">
                             <div class="form-group">
                                 <h4 class="col-xs-12 push-10">模块依赖检查</h4>
                                 <div class="col-sm-5">
@@ -36,26 +37,27 @@
                                     {else/}
                                     <table class="table table-bordered table-striped">
                                         <thead>
-                                            <tr>
-                                                <th>模块</th>
-                                                <th>唯一标识</th>
-                                                <th style="width: 100px;">当前版本</th>
-                                                <th style="width: 100px;">所需版本</th>
-                                                <th class="text-center" style="width: 100px;">检查结果</th>
-                                            </tr>
+                                        <tr>
+                                            <th>模块</th>
+                                            <th>唯一标识</th>
+                                            <th style="width: 100px;">当前版本</th>
+                                            <th style="width: 100px;">所需版本</th>
+                                            <th class="text-center" style="width: 100px;">检查结果</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
                                         {volist name="need_module" id="vo"}
-                                            <tr>
-                                                <td>{$vo.module}</td>
-                                                <td><a data-toggle="tooltip" href="http://www.thinkphp.cn" target="_blank" title="到商城查看该模块">{$vo.identifier}</a>
-                                                </td>
-                                                <td>{$vo.version}</td>
-                                                <td>{$vo.version_need}</td>
-                                                <td class="text-center">
-                                                    {$vo.result|raw}
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td>{$vo.module}</td>
+                                            <td><a data-toggle="tooltip" href="http://www.thinkphp.cn" target="_blank"
+                                                   title="到商城查看该模块">{$vo.identifier}</a>
+                                            </td>
+                                            <td>{$vo.version}</td>
+                                            <td>{$vo.version_need}</td>
+                                            <td class="text-center">
+                                                {$vo.result|raw}
+                                            </td>
+                                        </tr>
                                         {/volist}
                                         </tbody>
                                     </table>
@@ -127,11 +129,11 @@
                                 <h4 class="col-xs-12 push-10">是否清除旧数据</h4>
                                 <div class="col-xs-9">
                                     <label class="css-input css-radio css-radio-primary css-radio-sm push-10-r">
-                                        <input type="radio" name="clear" id="clear1" value="0" checked="">
+                                        <input checked="" id="clear1" name="clear" type="radio" value="0">
                                         <span></span> 否
                                     </label>
                                     <label class="css-input css-radio css-radio-primary css-radio-sm push-10-r">
-                                        <input type="radio" name="clear" id="clear2" value="1">
+                                        <input id="clear2" name="clear" type="radio" value="1">
                                         <span></span> 是
                                     </label>
                                     <div class="help-block">
@@ -141,10 +143,10 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-12">
-                                    <button class="btn btn-minw btn-primary" type="button" id="install">
-                                    安装
+                                    <button class="btn btn-minw btn-primary" id="install" type="button">
+                                        安装
                                     </button>
-                                    <button class="btn btn-default" type="button" onclick="javascript:history.back(-1);return false;">
+                                    <button class="btn btn-default" onclick="javascript:history.back(-1);return false;" type="button">
                                         返回
                                     </button>
                                 </div>
@@ -161,7 +163,7 @@
 
 {block name="script"}
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         $('#install').click(function () {
             var table_exists = false;
 

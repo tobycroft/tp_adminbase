@@ -22,7 +22,9 @@ class Index extends Admin
      */
     public function index()
     {
-        $admin_pass = Db::name('admin_user')->where('id', 1)->value('password');
+        $admin_pass = Db::name('admin_user')
+            ->where('id', 1)
+            ->value('password');
 
         if (UID == 1 && $admin_pass && Hash::check('admin', $admin_pass)) {
             $this->assign('default_pass', 1);
@@ -79,7 +81,8 @@ class Index extends Admin
             }
 
             $UserModel = new UserModel();
-            if ($user = $UserModel->allowField(['nickname', 'email', 'password', 'mobile', 'avatar'])->update($data)) {
+            if ($user = $UserModel->allowField(['nickname', 'email', 'password', 'mobile', 'avatar'])
+                ->update($data)) {
                 // 记录行为
                 action_log('user_edit', 'admin_user', UID, UID, get_nickname(UID));
                 $this->success('编辑成功');
@@ -89,12 +92,16 @@ class Index extends Admin
         }
 
         // 获取数据
-        $info = UserModel::where('id', UID)->field('password', true)->find();
+        $info = UserModel::where('id', UID)
+            ->field('password', true)
+            ->find();
 
         // 使用ZBuilder快速创建表单
-        return ZBuilder::make('form')->addFormItems([ // 批量添加表单项
-            ['static', 'username', '用户名', '不可更改'], ['text', 'nickname', '昵称', '可以是中文'], ['text', 'email', '邮箱', ''], ['password', 'password', '密码', '必填，6-20位'], ['text', 'mobile', '手机号'], ['image', 'avatar', '头像']])->setFormData($info) // 设置表单数据
-        ->fetch();
+        return ZBuilder::make('form')
+            ->addFormItems([ // 批量添加表单项
+                ['static', 'username', '用户名', '不可更改'], ['text', 'nickname', '昵称', '可以是中文'], ['text', 'email', '邮箱', ''], ['password', 'password', '密码', '必填，6-20位'], ['text', 'mobile', '手机号'], ['image', 'avatar', '头像']])
+            ->setFormData($info) // 设置表单数据
+            ->fetch();
     }
 
     /**
