@@ -1,45 +1,45 @@
 <!DOCTYPE html>
 <!--[if IE 9]>
 <html class="ie9 no-focus" lang="zh"> <![endif]-->
-<!--[if gt IE 9]><!-->
+<!--[if gt IE 9]><!--> <!--suppress BadExpressionStatementJS -->
 <html class="no-focus" lang="zh"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
 
     {block name="page-title"}<title>{$page_title|default='后台'} | {:config('web_site_title')} - ThinkPHP</title>{/block}
 
-    <meta content="{:config('web_site_description')}" name="description">
-    <meta content="caiweiming" name="author">
-    <meta content="noindex, nofollow" name="robots">
-    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-    <meta content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=0" name="viewport">
+    <meta name="description" content="{:config('web_site_description')}">
+    <meta name="author" content="caiweiming">
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=0">
 
     <!-- Icons -->
     <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-    <link href="__ADMIN_IMG__/favicons/favicon.ico" rel="shortcut icon">
+    <link rel="shortcut icon" href="__ADMIN_IMG__/favicons/favicon.ico">
 
-    <link href="__ADMIN_IMG__/favicons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
-    <link href="__ADMIN_IMG__/favicons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
-    <link href="__ADMIN_IMG__/favicons/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png">
-    <link href="__ADMIN_IMG__/favicons/favicon-160x160.png" rel="icon" sizes="160x160" type="image/png">
-    <link href="__ADMIN_IMG__/favicons/favicon-192x192.png" rel="icon" sizes="192x192" type="image/png">
+    <link rel="icon" type="image/png" href="__ADMIN_IMG__/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="__ADMIN_IMG__/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="__ADMIN_IMG__/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="__ADMIN_IMG__/favicons/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="__ADMIN_IMG__/favicons/favicon-192x192.png" sizes="192x192">
 
-    <link href="__ADMIN_IMG__/favicons/apple-touch-icon-57x57.png" rel="apple-touch-icon" sizes="57x57">
-    <link href="__ADMIN_IMG__/favicons/apple-touch-icon-60x60.png" rel="apple-touch-icon" sizes="60x60">
-    <link href="__ADMIN_IMG__/favicons/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
-    <link href="__ADMIN_IMG__/favicons/apple-touch-icon-76x76.png" rel="apple-touch-icon" sizes="76x76">
-    <link href="__ADMIN_IMG__/favicons/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
-    <link href="__ADMIN_IMG__/favicons/apple-touch-icon-120x120.png" rel="apple-touch-icon" sizes="120x120">
-    <link href="__ADMIN_IMG__/favicons/apple-touch-icon-144x144.png" rel="apple-touch-icon" sizes="144x144">
-    <link href="__ADMIN_IMG__/favicons/apple-touch-icon-152x152.png" rel="apple-touch-icon" sizes="152x152">
-    <link href="__ADMIN_IMG__/favicons/apple-touch-icon-180x180.png" rel="apple-touch-icon" sizes="180x180">
+    <link rel="apple-touch-icon" sizes="57x57" href="__ADMIN_IMG__/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="__ADMIN_IMG__/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="__ADMIN_IMG__/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="__ADMIN_IMG__/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="__ADMIN_IMG__/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="__ADMIN_IMG__/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="__ADMIN_IMG__/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="__ADMIN_IMG__/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="__ADMIN_IMG__/favicons/apple-touch-icon-180x180.png">
     <!-- END Icons -->
 
     <!-- Stylesheets -->
     <!-- Page JS Plugins CSS -->
     {notempty name="_css_files"}
     {eq name="Think.config.minify_status" value="1"}
-    <link href="{:minify('group', $_css_files)}" rel="stylesheet">
+    <link rel="stylesheet" href="{:minify('group', $_css_files)}">
     {else/}
     {volist name="_css_files" id="css"}
     {:load_assets($css)}
@@ -50,14 +50,14 @@
     {notempty name="extend_css_list"}
     {volist name="extend_css_list" id="vo"}
     {volist name="vo" id="v"}
-    <link href="{$v}?v={:config('asset_version')}" rel="stylesheet">
+    <link rel="stylesheet" href="{$v}?v={:config('asset_version')}">
     {/volist}
     {/volist}
     {/notempty}
 
     {notempty name="_icons"}
     {volist name="_icons" id="icon"}
-    <link href="{$icon.url}" rel="stylesheet">
+    <link rel="stylesheet" href="{$icon.url}">
     {/volist}
     {/notempty}
 
@@ -65,16 +65,16 @@
 
     <!-- Bootstrap and OneUI CSS framework -->
     {eq name="Think.config.minify_status" value="1"}
-    <link href="{:minify('group', 'libs_css,core_css')}" id="css-main" rel="stylesheet">
+    <link rel="stylesheet" id="css-main" href="{:minify('group', 'libs_css,core_css')}">
     {else/}
-    <link href="__LIBS__/sweetalert/sweetalert.min.css?v={:config('asset_version')}" rel="stylesheet">
-    <link href="__LIBS__/magnific-popup/magnific-popup.min.css?v={:config('asset_version')}" rel="stylesheet">
-    <link href="__ADMIN_CSS__/bootstrap.min.css?v={:config('asset_version')}" rel="stylesheet">
-    <link href="__ADMIN_CSS__/oneui.css?v={:config('asset_version')}" rel="stylesheet">
-    <link href="__ADMIN_CSS__/dolphin.css?v={:config('asset_version')}" id="css-main" rel="stylesheet">
-    <link href="__LIBS__/viewer/viewer.min.css?v={:config('asset_version')}" rel="stylesheet">
+    <link rel="stylesheet" href="__LIBS__/sweetalert/sweetalert.min.css?v={:config('asset_version')}">
+    <link rel="stylesheet" href="__LIBS__/magnific-popup/magnific-popup.min.css?v={:config('asset_version')}">
+    <link rel="stylesheet" href="__ADMIN_CSS__/bootstrap.min.css?v={:config('asset_version')}">
+    <link rel="stylesheet" href="__ADMIN_CSS__/oneui.css?v={:config('asset_version')}">
+    <link rel="stylesheet" href="__ADMIN_CSS__/dolphin.css?v={:config('asset_version')}" id="css-main">
+    <link rel="stylesheet" href="__LIBS__/viewer/viewer.min.css?v={:config('asset_version')}">
     {/eq}
-    <link href="__ADMIN_CSS__/themes/{:config('system_color')}.min.css?v={:config('asset_version')}" id="css-theme" rel="stylesheet">
+    <link rel="stylesheet" id="css-theme" href="__ADMIN_CSS__/themes/{:config('system_color')}.min.css?v={:config('asset_version')}">
 
     <!--页面css-->
     {block name="style"}{/block}
@@ -83,7 +83,6 @@
         #page-container.sidebar-l.sidebar-o {
             padding-left: 0;
         }
-
         .header-navbar-fixed #main-container {
             padding-top: 0;
         }
@@ -95,7 +94,7 @@
     {:hook('page_plugin_css')}
 
     <!--自定义css-->
-    <link href="__ADMIN_CSS__/custom.css?v={:config('asset_version')}" rel="stylesheet">
+    <link rel="stylesheet" href="__ADMIN_CSS__/custom.css?v={:config('asset_version')}">
     <script>
         // url
         var dolphin = {
@@ -110,72 +109,33 @@
             'ckeditor_img_upload_url': '{$ckeditor_img_upload_url ? $ckeditor_img_upload_url : url("admin/attachment/upload", ["dir" => "images", "from" => "ckeditor", "module" => request()->module()])}',
             'WebUploader_swf': '__LIBS__/webuploader/Uploader.swf',
             'file_upload_url': '{$file_upload_url ? $file_upload_url : url("admin/attachment/upload", ["dir" => "files", "module" => request()->module()])}',
+            'file_upload_chunk': '{$file_upload_chunk? 1 : 0}',
             'image_upload_url': '{$image_upload_url ? $image_upload_url : url("admin/attachment/upload", ["dir" => "images", "module" => request()->module()])}',
             'upload_check_url': '{$upload_check_url ? $upload_check_url : url("admin/ajax/check")}',
             'get_level_data': '{:url("admin/ajax/getLevelData")}',
             'quick_edit_url': '{$quick_edit_url ? $quick_edit_url : url("quickEdit")}',
             'aside_edit_url': '{$aside_edit_url ? $aside_edit_url : url("admin/system/quickEdit")}',
-            'triggers': {
-        :
-        json_encode(isset($field_triggers) ? $field_triggers : [])
-        }, // 触发器集合
-        'field_hide'
-        :
-        '{$field_hide|default=""}', // 需要隐藏的字段
-            'field_values'
-        :
-        '{$field_values|default=""}',
-            'validate'
-        :
-        '{$validate|default=""}', // 验证器
-            'validate_fields'
-        :
-        '{$validate_fields|default=""}', // 验证字段
-            'search_field'
-        :
-        '{:input("param.search_field", "")}', // 搜索字段
+            'triggers': {:json_encode(isset($field_triggers) ? $field_triggers : [])}, // 触发器集合
+        'field_hide': '{$field_hide|default=""}', // 需要隐藏的字段
+            'field_values': '{$field_values|default=""}',
+            'validate': '{$validate|default=""}', // 验证器
+            'validate_fields': '{$validate_fields|default=""}', // 验证字段
+            'search_field': '{:input("param.search_field", "")}', // 搜索字段
             // 字段过滤
-            '_filter'
-        :
-        '{$Request.param._filter ? $Request.param._filter : (isset($_filter) ? $_filter : "")}',
-            '_filter_content'
-        :
-        '{$Request.param._filter_content == '
-        ' ? (isset($_filter_content) ? $_filter_content : "") : $Request.param._filter_content}',
-            '_field_display'
-        :
-        '{$Request.param._field_display ? $Request.param._field_display : (isset($_field_display) ? $_field_display : "")}',
-            '_field_clear'
-        :
-        {:
-            json_encode(isset($field_clear) ? $field_clear : [])
-        }
-        ,
-        'get_filter_list'
-        :
-        '{:url("admin/ajax/getFilterList")}',
-            'curr_url'
-        :
-        '{:url("", $Request.route)}',
-            'curr_params'
-        :
-        {:
-            json_encode($Request.param)
-        }
-        ,
-        'layer'
-        :
-        {:
-            json_encode(config("zbuilder.pop"))
-        }
-        }
-        ;
+            '_filter': '{$Request.param._filter ? $Request.param._filter : (isset($_filter) ? $_filter : "")}',
+            '_filter_content': '{$Request.param._filter_content == '' ? (isset($_filter_content) ? $_filter_content : "") : $Request.param._filter_content}',
+            '_field_display': '{$Request.param._field_display ? $Request.param._field_display : (isset($_field_display) ? $_field_display : "")}',
+            '_field_clear': {:json_encode(isset($field_clear) ? $field_clear : [])},
+        'get_filter_list': '{:url("admin/ajax/getFilterList")}',
+            'curr_url': '{:url("", $Request.route)}',
+            'curr_params': {:json_encode($Request.param)},
+        'layer': {:json_encode(config("zbuilder.pop"))}
+        };
     </script>
 </head>
 <body>
 <!-- Page Container -->
-<div _pop class="sidebar-l sidebar-o side-scroll header-navbar-fixed {empty name=" id="page-container"
-"}{$_COOKIE['sidebarMini'] ?= 'sidebar-mini'}{/empty}">
+<div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed {empty name="_pop"}{$_COOKIE['sidebarMini'] ?= 'sidebar-mini'}{/empty}">
 <!-- Side Overlay-->
 {empty name="_pop"}
 {block name="aside"}
@@ -185,11 +145,11 @@
         <!-- Side Header -->
         <div class="side-header side-content">
             <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
-            <button class="btn btn-default pull-right" data-action="side_overlay_close" data-toggle="layout" type="button">
+            <button class="btn btn-default pull-right" type="button" data-toggle="layout" data-action="side_overlay_close">
                 <i class="fa fa-times"></i>
             </button>
             <span>
-                    <img alt="" class="img-avatar img-avatar32" src="{$Think.session.user_auth.uid|get_avatar}">
+                    <img class="img-avatar img-avatar32" src="{$Think.session.user_auth.uid|get_avatar}" alt="">
                     <span class="font-w600 push-10-l">{:session('user_auth.username')}</span>
                 </span>
         </div>
@@ -215,7 +175,7 @@
             <!-- Side Header -->
             <div class="side-header side-content bg-white-op dolphin-header">
                 <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
-                <button class="btn btn-link text-gray pull-right hidden-md hidden-lg" data-action="sidebar_close" data-toggle="layout" type="button">
+                <button class="btn btn-link text-gray pull-right hidden-md hidden-lg" type="button" data-toggle="layout" data-action="sidebar_close">
                     <i class="fa fa-times"></i>
                 </button>
                 <!-- Themes functionality initialized in App() -> uiHandleTheme() -->
@@ -224,39 +184,33 @@
                         <i class="si si-drop"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right font-s13 sidebar-mini-hide">
-                        <li {$system_color==
-                        'modern' ?= 'class="active"'}>
-                        <a data-css="__ADMIN_CSS__/themes/modern.min.css" data-theme="modern" data-toggle="theme" href="javascript:void(0)" tabindex="-1">
+                        <li {$system_color == 'modern' ?= 'class="active"'}>
+                        <a data-toggle="theme" data-theme="modern" data-css="__ADMIN_CSS__/themes/modern.min.css" tabindex="-1" href="javascript:void(0)">
                             <i class="fa fa-circle text-modern pull-right"></i> <span class="font-w600">Modern</span>
                         </a>
                         </li>
-                        <li {$system_color==
-                        'amethyst' ?= 'class="active"'}>
-                        <a data-css="__ADMIN_CSS__/themes/amethyst.min.css" data-theme="amethyst" data-toggle="theme" href="javascript:void(0)" tabindex="-1">
+                        <li {$system_color == 'amethyst' ?= 'class="active"'}>
+                        <a data-toggle="theme" data-theme="amethyst" data-css="__ADMIN_CSS__/themes/amethyst.min.css" tabindex="-1" href="javascript:void(0)">
                             <i class="fa fa-circle text-amethyst pull-right"></i> <span class="font-w600">Amethyst</span>
                         </a>
                         </li>
-                        <li {$system_color==
-                        'city' ?= 'class="active"'}>
-                        <a data-css="__ADMIN_CSS__/themes/city.min.css" data-theme="city" data-toggle="theme" href="javascript:void(0)" tabindex="-1">
+                        <li {$system_color == 'city' ?= 'class="active"'}>
+                        <a data-toggle="theme" data-theme="city" data-css="__ADMIN_CSS__/themes/city.min.css" tabindex="-1" href="javascript:void(0)">
                             <i class="fa fa-circle text-city pull-right"></i> <span class="font-w600">City</span>
                         </a>
                         </li>
-                        <li {$system_color==
-                        'flat' ?= 'class="active"'}>
-                        <a data-css="__ADMIN_CSS__/themes/flat.min.css" data-theme="flat" data-toggle="theme" href="javascript:void(0)" tabindex="-1">
+                        <li {$system_color == 'flat' ?= 'class="active"'}>
+                        <a data-toggle="theme" data-theme="flat" data-css="__ADMIN_CSS__/themes/flat.min.css" tabindex="-1" href="javascript:void(0)">
                             <i class="fa fa-circle text-flat pull-right"></i> <span class="font-w600">Flat</span>
                         </a>
                         </li>
-                        <li {$system_color==
-                        'smooth' ?= 'class="active"'}>
-                        <a data-css="__ADMIN_CSS__/themes/smooth.min.css" data-theme="smooth" data-toggle="theme" href="javascript:void(0)" tabindex="-1">
+                        <li {$system_color == 'smooth' ?= 'class="active"'}>
+                        <a data-toggle="theme" data-theme="smooth" data-css="__ADMIN_CSS__/themes/smooth.min.css" tabindex="-1" href="javascript:void(0)">
                             <i class="fa fa-circle text-smooth pull-right"></i> <span class="font-w600">Smooth</span>
                         </a>
                         </li>
-                        <li {$system_color==
-                        'default' ?= 'class="active"'}>
-                        <a data-theme="default" data-toggle="theme" href="javascript:void(0)" tabindex="-1">
+                        <li {$system_color == 'default' ?= 'class="active"'}>
+                        <a data-toggle="theme" data-theme="default" tabindex="-1" href="javascript:void(0)">
                             <i class="fa fa-circle text-default pull-right"></i> <span class="font-w600">Default</span>
                         </a>
                         </li>
@@ -264,16 +218,15 @@
                 </div>
                 <a class="h5 text-white" href="{:url('admin/index/index')}">
                     {notempty name="Think.config.web_site_logo"}
-                    <img alt="{$Think.config.web_site_title|default='Dolphin PHP'}" class="logo" src="{$Think.config.web_site_logo|get_file_path}">
+                    <img src="{$Think.config.web_site_logo|get_file_path}" class="logo" alt="{$Think.config.web_site_title|default='Dolphin PHP'}">
                     {else/}
-                    <img alt="Dolphin PHP" class="logo" src="{$Think.config.public_static_path}admin/img/logo.png">
+                    <img src="{$Think.config.public_static_path}admin/img/logo.png" class="logo" alt="Dolphin PHP">
                     {/notempty}
 
                     {notempty name="Think.config.web_site_logo_text"}
-                    <img alt="{$Think.config.web_site_title|default='Dolphin PHP'}" class="logo-text sidebar-mini-hide"
-                         src="{$Think.config.web_site_logo_text|get_file_path}">
+                    <img src="{$Think.config.web_site_logo_text|get_file_path}" class="logo-text sidebar-mini-hide" alt="{$Think.config.web_site_title|default='Dolphin PHP'}">
                     {else/}
-                    <img alt="Dolphin PHP" class="logo-text sidebar-mini-hide" src="{$Think.config.public_static_path}admin/img/logo-text.png">
+                    <img src="{$Think.config.public_static_path}admin/img/logo-text.png" class="logo-text sidebar-mini-hide" alt="Dolphin PHP">
                     {/notempty}
                 </a>
             </div>
@@ -284,19 +237,16 @@
                 {notempty name="_sidebar_menus"}
                 <ul class="nav-main" id="nav-{$_location[0]['id']}">
                     {volist name="_sidebar_menus" id="menu"}
-                    <li {$menu[
-                    'id'] == $_location[1]["id"]?='class="open"'}>
+                    <li {$menu['id'] == $_location[1]["id"]?='class="open"'}>
                     {notempty name="menu.url_value"}
-                    <a {if($menu['id'] == $_location[1]["id"])}class="active"{/if} href="{$menu.url_value}" target="{$menu.url_target}"><i
-                        class="{$menu.icon}"></i><span class="sidebar-mini-hide">{$menu.title}</span></a>
+                    <a {if($menu['id'] == $_location[1]["id"])}class="active"{/if} href="{$menu.url_value}" target="{$menu.url_target}"><i class="{$menu.icon}"></i><span class="sidebar-mini-hide">{$menu.title}</span></a>
                     {else/}
                     <a class="nav-submenu" data-toggle="nav-submenu" href="javascript:void(0);"><i class="{$menu.icon}"></i><span class="sidebar-mini-hide">{$menu.title}</span></a>
                     {notempty name="menu['child']"}
                     <ul>
                         {volist name="menu['child']" id="submenu"}
                         <li>
-                            <a $submenu[ && {if(isset($_location[2])'id'] == $_location[2]["id"])}class="active"{/if} href="{$submenu.url_value}"
-                            target="{$submenu.url_target}"><i class="{$submenu.icon}"></i>{$submenu.title}</a>
+                            <a {if(isset($_location[2]) && $submenu['id'] == $_location[2]["id"])}class="active"{/if} href="{$submenu.url_value}" target="{$submenu.url_target}"><i class="{$submenu.icon}"></i>{$submenu.title}</a>
                         </li>
                         {/volist}
                     </ul>
@@ -320,13 +270,13 @@
 <!-- Header -->
 {empty name="_pop"}
 {block name="header"}
-<header class="content-mini content-mini-full" id="header-navbar">
+<header id="header-navbar" class="content-mini content-mini-full">
     <!-- Header Navigation Right -->
     <ul class="nav-header pull-right">
         <li>
             <div class="btn-group">
                 <button class="btn btn-default btn-image dropdown-toggle" data-toggle="dropdown" type="button">
-                    <img alt="{:session('user_auth.username')}" src="{$Think.session.user_auth.uid|get_avatar}">
+                    <img src="{$Think.session.user_auth.uid|get_avatar}" alt="{:session('user_auth.username')}">
                     <span class="caret"></span>
                     {notempty name="_message"}
                     {gt name="_message" value="0"}
@@ -337,23 +287,23 @@
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li class="dropdown-header">{:session('user_auth.username')} ({:session('user_auth.role_name')})</li>
                     <li>
-                        <a href="{:url('admin/index/profile')}" tabindex="-1">
+                        <a tabindex="-1" href="{:url('admin/index/profile')}">
                             <i class="si si-settings pull-right"></i>个人设置
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" id="js-change-role" tabindex="-1">
+                        <a tabindex="-1" href="javascript:void(0);" id="js-change-role">
                             <i class="si si-users pull-right"></i>切换角色
                         </a>
                     </li>
                     <li>
-                        <a href="{:url('admin/message/index')}" tabindex="-1">
+                        <a tabindex="-1" href="{:url('admin/message/index')}">
                             <i class="si si-envelope-open pull-right"></i><span class="badge badge-primary pull-right">{$_message|default=0}</span>消息中心
                         </a>
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="{:url('user/publics/signout')}" tabindex="-1">
+                        <a tabindex="-1" href="{:url('user/publics/signout')}">
                             <i class="si si-logout pull-right"></i>退出帐号
                         </a>
                     </li>
@@ -361,20 +311,18 @@
             </div>
         </li>
         <li>
-            <a class="btn btn-default ajax-get" data-original-title="清空缓存" data-placement="bottom" data-toggle="tooltip"
-               href="{:url('admin/index/wipeCache')}">
+            <a class="btn btn-default ajax-get" href="{:url('admin/index/wipeCache')}" data-toggle="tooltip" data-placement="bottom" data-original-title="清空缓存">
                 <i class="fa fa-trash"></i>
             </a>
         </li>
         <li>
-            <a class="btn btn-default" data-original-title="打开前台" data-placement="bottom" data-toggle="tooltip" href="{:rtrim(home_url('/'), '/')}"
-               target="_blank">
+            <a class="btn btn-default" href="{:rtrim(home_url('/'), '/')}" target="_blank" data-toggle="tooltip" data-placement="bottom" data-original-title="打开前台">
                 <i class="fa fa-external-link-square"></i>
             </a>
         </li>
         <li>
             <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
-            <button class="btn btn-default" data-action="side_overlay_toggle" data-toggle="layout" title="侧边栏" type="button">
+            <button class="btn btn-default" data-toggle="layout" data-action="side_overlay_toggle" title="侧边栏" type="button">
                 <i class="fa fa-tasks"></i>
             </button>
         </li>
@@ -385,18 +333,17 @@
     <ul class="nav nav-pills pull-left">
         <li class="hidden-md hidden-lg">
             <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
-            <a data-action="sidebar_toggle" data-toggle="layout" href="javascript:void(0)"><i class="fa fa-navicon"></i></a>
+            <a href="javascript:void(0)" data-toggle="layout" data-action="sidebar_toggle"><i class="fa fa-navicon"></i></a>
         </li>
         <li class="hidden-xs hidden-sm">
             <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
-            <a data-action="sidebar_mini_toggle" data-toggle="layout" href="javascript:void(0)" title="打开/关闭左侧导航"><i class="fa fa-bars"></i></a>
+            <a href="javascript:void(0)" title="打开/关闭左侧导航" data-toggle="layout" data-action="sidebar_mini_toggle"><i class="fa fa-bars"></i></a>
         </li>
         {notempty name="_top_menus"}
         {volist name="_top_menus" id="menu"}
         <li class="hidden-xs hidden-sm {$menu['id'] == $_location[0]['id'] ?= 'active'}">
             {in name="menu.url_type" value="module_admin,module_home"}
-            <a class="top-menu" data-controller="{$menu['controller']}" data-module="{$menu['module']}" data-module-id="{$menu['id']}"
-               href="javascript:void(0);" target="{$menu['url_target']}"><i class="{$menu.icon}"></i> {$menu.title}</a>
+            <a href="javascript:void(0);" data-module-id="{$menu['id']}" data-module="{$menu['module']}" data-controller="{$menu['controller']}" target="{$menu['url_target']}" class="top-menu"><i class="{$menu.icon}"></i> {$menu.title}</a>
             {else/}
             <a href="{$menu['url_value']}" target="{$menu['url_target']}"><i class="{$menu.icon}"></i> {$menu.title}</a>
             {/in}
@@ -405,7 +352,7 @@
         {/notempty}
         <li>
             <!-- Opens the Apps modal found at the bottom of the page, before including JS code -->
-            <a data-target="#apps-modal" data-toggle="modal" href="#"><i class="si si-grid"></i></a>
+            <a href="#" data-toggle="modal" data-target="#apps-modal"><i class="si si-grid"></i></a>
         </li>
     </ul>
     <!-- END Header Navigation Left -->
@@ -424,8 +371,7 @@
             <li><i class="fa fa-map-marker"></i></li>
             {notempty name="_location"}
             {volist name="_location" id="v"}
-            <li><a class="link-effect" href="{notempty name='$v[" url_value"]'}{:url($v.url_value,
-                $v.params)}{else/}javascript:void(0);{/notempty}">{$v.title}</a></li>
+            <li><a class="link-effect" href="{notempty name='$v["url_value"]'}{:url($v.url_value, $v.params)}{else/}javascript:void(0);{/notempty}">{$v.title}</a></li>
             {/volist}
             {/notempty}
         </ol>
@@ -447,7 +393,7 @@
 
 <!-- Footer -->
 {empty name="_pop"}
-<footer class="content-mini content-mini-full font-s12 bg-gray-lighter clearfix" id="page-footer">
+<footer id="page-footer" class="content-mini content-mini-full font-s12 bg-gray-lighter clearfix">
     <div class="pull-right">
     </div>
     <div class="pull-left">
@@ -460,7 +406,7 @@
 
 <!-- Apps Modal -->
 <!-- Opens from the button in the header -->
-<div aria-hidden="true" class="modal fade" id="apps-modal" role="dialog" tabindex="-1">
+<div class="modal fade" id="apps-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-top">
         <div class="modal-content">
             <!-- Apps Block -->
@@ -479,9 +425,7 @@
                         {volist name="_top_menus_all" id="menu"}
                         <div class="col-xs-6 col-sm-3">
                             {in name="menu.url_type" value="module_admin,module_home"}
-                            <a class="block block-rounded top-menu" data-controller="{$menu['controller']}" data-module="{$menu['module']}"
-                               data-module-id="{$menu['id']}"
-                               href="javascript:void(0);" target="{$menu['url_target']}">
+                            <a class="block block-rounded top-menu" href="javascript:void(0);" data-module-id="{$menu['id']}" data-module="{$menu['module']}" data-controller="{$menu['controller']}" target="{$menu['url_target']}">
                                 <div class="block-content text-white {$menu['id'] == $_location[0]['id'] ? 'bg-primary' : 'bg-primary-dark'}">
                                     <i class="{$menu.icon} fa-2x"></i>
                                     <div class="font-w600 push-15-t push-15">{$menu.title}</div>
@@ -560,7 +504,7 @@
                 if (res.code) {
                     let options = '';
                     $.each(res.data.roles, function (index, item) {
-                        options += '<option value="' + index + '" ' + (res.data.curr == index ? 'selected' : '') + '>' + item + '</option>';
+                        options += '<option value="'+index+'" '+(res.data.curr == index ? 'selected' : '')+'>'+item+'</option>';
                     });
 
                     layer.open({
@@ -575,10 +519,10 @@
                             '    </select>\n' +
                             '</div>\n' +
                             '</div>',
-                        yes: function (index, layero) {
+                        yes: function(index, layero){
                             let role = $('#role-select').val();
                             let loading = layer.load(2);
-                            $.post('{:url("admin/ajax/setMyRole")}', {id: role}, function (res) {
+                            $.post('{:url("admin/ajax/setMyRole")}', {id:role}, function (res) {
                                 layer.close(loading);
                                 if (res.code) {
                                     layer.close(index);
@@ -598,18 +542,10 @@
             });
         });
         App.initHelpers(['appear', 'slimscroll', 'magnific-popup', 'table-tools']);
-        {
-            notempty
-            name = "_js_init"
-        }
-        App.initHelpers({$_js_init | raw
-    })
-        ;
-        {
-            /notempty}
-        }
-    )
-        ;
+        {notempty name="_js_init"}
+        App.initHelpers({$_js_init|raw});
+        {/notempty}
+        });
 </script>
 
 <!--页面js-->

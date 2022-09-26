@@ -364,7 +364,7 @@ jQuery(document).ready(function () {
 
         editormds[editormd_name] = editormd(editormd_name, {
             height: 500, // 高度
-            placeholder: 'ThinkPHP，为提升开发效率而生！！',
+            placeholder: '海豚PHP，为提升开发效率而生！！',
             watch: watch,
             searchReplace: true,
             toolbarAutoFixed: false, // 取消工具栏固定
@@ -524,29 +524,32 @@ jQuery(document).ready(function () {
         var $file_list = $('#file_list_' + $input_file_name);
 
         // 实例化上传
-        var uploader = WebUploader.create({
+
+        var config = {
             // 选完文件后，是否自动上传。
             auto: true,
             // 去重
-            duplicate: true,
-            // swf文件路径
-            swf: dolphin.WebUploader_swf,
-            // 文件接收服务端。
-            server: dolphin.file_upload_url,
-            // 选择文件的按钮。可选。
+            duplicate: true, // swf文件路径
+            swf: dolphin.WebUploader_swf, // 文件接收服务端。
+            server: dolphin.file_upload_url, // 选择文件的按钮。可选。
             // 内部根据当前运行是创建，可能是input元素，也可能是flash.
             pick: {
-                id: '#picker_' + $input_file_name,
-                multiple: $multiple
-            },
-            // 文件限制大小
-            fileSingleSizeLimit: $size,
-            // 只允许选择文件文件。
+                id: '#picker_' + $input_file_name, multiple: $multiple
+            }, // 文件限制大小
+            fileSingleSizeLimit: $size, // 只允许选择文件文件。
             accept: {
-                title: 'Files',
-                extensions: $ext
-            }
-        });
+                title: 'Files', extensions: $ext
+            },
+            //每个分片的大小(这里设为4M)
+        };
+
+        if (dolphin.file_upload_chunk === "1") {
+            config["chunked"] = dolphin.file_upload_chunk;
+            config["chunkSize"] = 2 * 1024 * 1024;
+        }
+
+        var uploader = WebUploader.create(config);
+
 
         // 当有文件添加进来的时候
         uploader.on('fileQueued', function (file) {
