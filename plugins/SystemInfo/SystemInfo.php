@@ -16,22 +16,23 @@ class SystemInfo extends Plugin
      */
     public $info = [
         // 插件名[必填]
-        'name'        => 'SystemInfo',
+        'name' => 'SystemInfo',
         // 插件标题[必填]
-        'title'       => '系统环境信息',
+        'title' => '系统环境信息',
         // 插件唯一标识[必填],格式：插件名.开发者标识.plugin
-        'identifier'  => 'system_info.ming.plugin',
+        'identifier' => 'system_info.ming.plugin',
         // 插件图标[选填]
-        'icon'        => 'fa fa-fw fa-info-circle',
+        'icon' => 'fa fa-fw fa-info-circle',
         // 插件描述[选填]
         'description' => '在后台首页显示服务器信息',
         // 插件作者[必填]
+        'author' => 'YourFather',
         // 作者主页[选填]
-        'author_url'  => 'http://www.caiweiming.com',
+        'author_url' => 'http://www.caiweiming.com',
         // 插件版本[必填],格式采用三段式：主版本号.次版本号.修订版本号
-        'version'     => '1.0.0',
+        'version' => '1.0.0',
         // 是否有后台管理功能[选填]
-        'admin'       => '0',
+        'admin' => '0',
     ];
 
     /**
@@ -57,7 +58,8 @@ class SystemInfo extends Plugin
      * 安装方法
      * @return bool
      */
-    public function install(){
+    public function install()
+    {
         return true;
     }
 
@@ -65,7 +67,8 @@ class SystemInfo extends Plugin
      * 卸载方法必
      * @return bool
      */
-    public function uninstall(){
+    public function uninstall()
+    {
         return true;
     }
 }
