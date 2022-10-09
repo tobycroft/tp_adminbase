@@ -1,8 +1,17 @@
 /*
-
+// +----------------------------------------------------------------------
+// | 海豚PHP框架 [ DThinkPHP ]
+// +----------------------------------------------------------------------
+// | 版权所有 2016~2017 河源市卓锐科技有限公司 [ http://www.thinkphp.cn ]
+// +----------------------------------------------------------------------
+// | 官方网站: http://DThinkPHP.com
+// +----------------------------------------------------------------------
+// | 开源协议 ( http://www.apache.org/licenses/LICENSE-2.0 )
+// +----------------------------------------------------------------------
 */
 
-SET FOREIGN_KEY_CHECKS=0;
+SET
+FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
 -- Table structure for `dolphin_plugin_hello`
@@ -15,7 +24,7 @@ CREATE TABLE `dolphin_plugin_hello`
     `said`   text        NOT NULL COMMENT '名言',
     `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dolphin_plugin_hello

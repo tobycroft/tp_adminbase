@@ -16,7 +16,7 @@ class HelloWorld extends Plugin
      */
     public $info = [
         // 插件名[必填]
-        'name'        => 'HelloWorld',
+        'name' => 'HelloWorld',
         // 插件标题[必填]
         'title' => '你好，世界',
         // 插件唯一标识[必填],格式：插件名.开发者标识.plugin
@@ -27,7 +27,7 @@ class HelloWorld extends Plugin
         'description' => '这是一个演示插件，会在每个页面生成一个提示“Hello World”。您可以查看源码，里面包含了绝大部分插件所用到的方法，以及能做的事情。',
         // 插件作者[必填]
         // 作者主页[选填]
-        'author_url' => 'http://www.thinkphp.cn',
+        'author_url' => 'http://www.DThinkPHP.com',
         // 插件版本[必填],格式采用三段式：主版本号.次版本号.修订版本号
         'version' => '1.0.0',
         // 是否有后台管理功能
