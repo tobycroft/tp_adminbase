@@ -1,12 +1,12 @@
 <?php
 
 
-namespace app\parentschool\admin;
+namespace app\anymodule\admin;
 
 use app\admin\controller\Admin;
+use app\anymodule\model\ParentModel;
+use app\anymodule\model\SystemParamModel;
 use app\common\builder\ZBuilder;
-use app\parentschool\model\ParentModel;
-use app\parentschool\model\SystemParamModel;
 use app\user\model\Role;
 use think\Db;
 use think\facade\Hook;
