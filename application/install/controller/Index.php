@@ -139,7 +139,7 @@ class Index extends Controller
             }
 
             // 创建数据库
-            $sql = "CREATE DATABASE IF NOT EXISTS `{$db_name}` DEFAULT CHARACTER SET utf8";
+            $sql = "CREATE DATABASE IF NOT EXISTS `{$db_name}` DEFAULT CHARACTER SET utf8mb4 ";
             $db_instance->execute($sql) || $this->error($db_instance->getError());
 
             // 跳转到数据库安装页面

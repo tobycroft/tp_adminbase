@@ -85,7 +85,7 @@ class Model extends ThinkModel
             PRIMARY KEY (`id`)
             )
             ENGINE=InnoDB
-            DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+            DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8_general_ci
             CHECKSUM=0
             ROW_FORMAT=DYNAMIC
             DELAY_KEY_WRITE=0
@@ -100,7 +100,7 @@ EOF;
                 PRIMARY KEY (`aid`)
                 )
                 ENGINE=InnoDB
-                DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+                DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8_general_ci
                 CHECKSUM=0
                 ROW_FORMAT=DYNAMIC
                 DELAY_KEY_WRITE=0
