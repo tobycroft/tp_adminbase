@@ -34,9 +34,7 @@ class Ajax extends Common
         $option = $token_data['option'];
         $key = $token_data['key'];
 
-        $data_list = Db::name($table)
-            ->where($pidkey, $pid)
-            ->column($option, $key);
+        $data_list = Db::name($table)->where($pidkey, $pid)->column($option, $key);
 
         if ($data_list === false) {
             return json(['code' => 0, 'msg' => '查询失败']);
@@ -96,15 +94,9 @@ class Ajax extends Common
         }
 
         if (strpos($table, '/')) {
-            $data_list = model($table)
-                ->where($map)
-                ->group($field)
-                ->column($field);
+            $data_list = model($table)->where($map)->group($field)->column($field);
         } else {
-            $data_list = Db::name($table)
-                ->where($map)
-                ->group($field)
-                ->column($field);
+            $data_list = Db::name($table)->where($map)->group($field)->column($field);
         }
 
         if ($data_list === false) {
@@ -174,9 +166,7 @@ class Ajax extends Common
         $map['name'] = 'system_color';
         $map['group'] = 'system';
 
-        if (Db::name('admin_config')
-            ->where($map)
-            ->setField('value', $theme)) {
+        if (Db::name('admin_config')->where($map)->setField('value', $theme)) {
             $this->success('设置成功');
         } else {
             $this->error('设置失败，请重试');
@@ -226,15 +216,15 @@ class Ajax extends Common
                 'code' => 1,
                 'info' => '文件已上传',
                 'class' => 'success',
-                'id' => $file_exists["path"],
-                'path' => $file_exists["path"],
+                'id' => $file_exists['path'],
+                'path' => $file_exists['path'],
                 'data' => $file_exists,
             ];
             return json($data);
         }
-        $Aoss = new Aoss(config("upload_prefix"), "complete");
+        $Aoss = new Aoss(config('upload_prefix'), 'complete');
         $md5_data = $Aoss->md5($md5);
-        if (empty($md5_data->error)) {
+        if ($md5_data->isSuccess()) {
             $file_info = [
                 'uid' => session('user_auth.uid'),
                 'name' => $md5_data->name,
@@ -244,11 +234,11 @@ class Ajax extends Common
                 'size' => $md5_data->size,
                 'md5' => $md5_data->md5,
                 'sha1' => $md5_data->sha1,
-                'thumb' => "",
-                'module' => "remote",
+                'thumb' => '',
+                'module' => 'remote',
                 'width' => $md5_data->width,
                 'height' => $md5_data->height,
-                'driver' => "remote",
+                'driver' => 'remote',
             ];
             // 写入数据库
             if (AttachmentModel::create($file_info)) {
@@ -282,9 +272,7 @@ class Ajax extends Common
             $this->error('请先登录');
         }
 
-        $user = Db::name('admin_user')
-            ->where('id', session('user_auth.uid'))
-            ->find();
+        $user = Db::name('admin_user')->where('id', session('user_auth.uid'))->find();
         !$user && $this->error('获取失败');
 
         $roles = [$user['role']];
@@ -292,9 +280,7 @@ class Ajax extends Common
             $roles = array_merge($roles, explode(',', $user['roles']));
         }
         $roles = array_unique($roles);
-        $roles = Db::name('admin_role')
-            ->where('id', 'in', $roles)
-            ->column('id,name');
+        $roles = Db::name('admin_role')->where('id', 'in', $roles)->column('id,name');
         $this->success('获取成功', null, [
             'curr' => session('user_auth.role'),
             'roles' => $roles
@@ -318,9 +304,7 @@ class Ajax extends Common
         $id == '' && $this->error('请选择要设置的角色');
 
         // 读取当前用户能设置的角色
-        $user = Db::name('admin_user')
-            ->where('id', session('user_auth.uid'))
-            ->find();
+        $user = Db::name('admin_user')->where('id', session('user_auth.uid'))->find();
         !$user && $this->error('设置失败');
 
         $roles = [$user['role']];
@@ -335,9 +319,7 @@ class Ajax extends Common
 
         cache('role_menu_auth_' . session('user_auth.role'), null);
         session('user_auth.role', $id);
-        session('user_auth.role_name', Db::name('admin_role')
-            ->where('id', $id)
-            ->value('name'));
+        session('user_auth.role_name', Db::name('admin_role')->where('id', $id)->value('name'));
         session('user_auth_sign', data_auth_sign(session('user_auth')));
         $this->success('设置成功');
     }
