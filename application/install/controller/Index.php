@@ -5,6 +5,7 @@ namespace app\install\controller;
 
 use think\Controller;
 use think\Db;
+use think\facade\Env;
 
 define('INSTALL_APP_PATH', realpath('./') . '/');
 
