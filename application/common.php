@@ -75,6 +75,9 @@ if (!function_exists('get_file_path')) {
     {
         $path = model('admin/attachment')->getFilePath($id);
         if (!$path) {
+            if (!empty($id) && strtolower($id) != 'null') {
+                return $id;
+            }
             return config('public_static_path') . 'admin/img/none.png';
         }
         return $path;
@@ -104,6 +107,9 @@ if (!function_exists('get_thumb')) {
     {
         $path = model('admin/attachment')->getThumbPath($id);
         if (!$path) {
+            if (!empty($id) && strtolower($id) != 'null') {
+                return $id;
+            }
             return config('public_static_path') . 'admin/img/none.png';
         }
         return $path;
@@ -490,12 +496,14 @@ if (!function_exists('get_client_ip')) {
     {
         $type = $type ? 1 : 0;
         static $ip = NULL;
-        if ($ip !== NULL) return $ip[$type];
+        if ($ip !== NULL)
+            return $ip[$type];
         if ($adv) {
             if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                 $arr = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
                 $pos = array_search('unknown', $arr);
-                if (false !== $pos) unset($arr[$pos]);
+                if (false !== $pos)
+                    unset($arr[$pos]);
                 $ip = trim($arr[0]);
             } elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
                 $ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -506,7 +514,7 @@ if (!function_exists('get_client_ip')) {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
         // IP地址合法验证
-        $long = sprintf("%u", ip2long($ip));
+        $long = sprintf('%u', ip2long($ip));
         $ip = $long ? array($ip, $long) : array('0.0.0.0', 0);
         return $ip[$type];
     }
@@ -523,7 +531,8 @@ if (!function_exists('format_bytes')) {
     function format_bytes($size, $delimiter = '')
     {
         $units = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
-        for ($i = 0; $size >= 1024 && $i < 5; $i++) $size /= 1024;
+        for ($i = 0; $size >= 1024 && $i < 5; $i++)
+            $size /= 1024;
         return round($size, 2) . $delimiter . $units[$i];
     }
 }
@@ -946,7 +955,7 @@ if (!function_exists('clear_js')) {
      */
     function clear_js($str = '')
     {
-        $search = "/<script[^>]*?>.*?<\/script>/si";
+        $search = '/<script[^>]*?>.*?<\/script>/si';
         $str = preg_replace($search, '', $str);
         return $str;
     }
@@ -1267,7 +1276,7 @@ if (!function_exists('parse_name')) {
                 return strtoupper($match[1]);
             }, $name));
         } else {
-            return strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $name), "_"));
+            return strtolower(trim(preg_replace('/[A-Z]/', "_\\0", $name), '_'));
         }
     }
 }
@@ -1340,7 +1349,8 @@ if (!function_exists('extend_form_item')) {
      */
     function extend_form_item($form = [], $_layout = [])
     {
-        if (!isset($form['type'])) return '';
+        if (!isset($form['type']))
+            return '';
         if (!empty($_layout) && isset($_layout[$form['name']])) {
             $form['_layout'] = $_layout[$form['name']];
         }
@@ -1393,13 +1403,19 @@ if (!function_exists('get_browser_type')) {
      */
     function get_browser_type()
     {
-        $agent = $_SERVER["HTTP_USER_AGENT"];
-        if (strpos($agent, 'MSIE') !== false || strpos($agent, 'rv:11.0')) return "ie";
-        if (strpos($agent, 'Firefox') !== false) return "firefox";
-        if (strpos($agent, 'Chrome') !== false) return "chrome";
-        if (strpos($agent, 'Opera') !== false) return 'opera';
-        if ((strpos($agent, 'Chrome') == false) && strpos($agent, 'Safari') !== false) return 'safari';
-        if (false !== strpos($_SERVER['HTTP_USER_AGENT'], '360SE')) return '360SE';
+        $agent = $_SERVER['HTTP_USER_AGENT'];
+        if (strpos($agent, 'MSIE') !== false || strpos($agent, 'rv:11.0'))
+            return 'ie';
+        if (strpos($agent, 'Firefox') !== false)
+            return 'firefox';
+        if (strpos($agent, 'Chrome') !== false)
+            return 'chrome';
+        if (strpos($agent, 'Opera') !== false)
+            return 'opera';
+        if ((strpos($agent, 'Chrome') == false) && strpos($agent, 'Safari') !== false)
+            return 'safari';
+        if (false !== strpos($_SERVER['HTTP_USER_AGENT'], '360SE'))
+            return '360SE';
         return 'unknown';
     }
 }
