@@ -93,26 +93,49 @@ INSERT INTO `dp_admin_action` VALUES ('30', 'admin', 'menu_add', '添加节点',
 INSERT INTO `dp_admin_action` VALUES ('31', 'admin', 'menu_edit', '编辑节点', '编辑节点', '', '[user|get_nickname] 编辑了节点：[details]', '1', '1480305513', '1480305513');
 INSERT INTO `dp_admin_action` VALUES ('32', 'admin', 'menu_delete', '删除节点', '删除节点', '', '[user|get_nickname] 删除了节点：[details]', '1', '1480305562', '1480305562');
 INSERT INTO `dp_admin_action` VALUES ('33', 'admin', 'menu_enable', '启用节点', '启用节点', '', '[user|get_nickname] 启用了节点：[details]', '1', '1480305630', '1480305630');
-INSERT INTO `dp_admin_action` VALUES ('34', 'admin', 'menu_disable', '禁用节点', '禁用节点', '', '[user|get_nickname] 禁用了节点：[details]', '1', '1480305659', '1480305659');
-INSERT INTO `dp_admin_action` VALUES ('35', 'admin', 'module_install', '安装模块', '安装模块', '', '[user|get_nickname] 安装了模块：[details]', '1', '1480307558', '1480307558');
-INSERT INTO `dp_admin_action` VALUES ('36', 'admin', 'module_uninstall', '卸载模块', '卸载模块', '', '[user|get_nickname] 卸载了模块：[details]', '1', '1480307588', '1480307588');
-INSERT INTO `dp_admin_action` VALUES ('37', 'admin', 'module_enable', '启用模块', '启用模块', '', '[user|get_nickname] 启用了模块：[details]', '1', '1480307618', '1480307618');
-INSERT INTO `dp_admin_action` VALUES ('38', 'admin', 'module_disable', '禁用模块', '禁用模块', '', '[user|get_nickname] 禁用了模块：[details]', '1', '1480307653', '1480307653');
-INSERT INTO `dp_admin_action` VALUES ('39', 'admin', 'module_export', '导出模块', '导出模块', '', '[user|get_nickname] 导出了模块：[details]', '1', '1480307682', '1480307682');
-INSERT INTO `dp_admin_action` VALUES ('40', 'admin', 'packet_install', '安装数据包', '安装数据包', '', '[user|get_nickname] 安装了数据包：[details]', '1', '1480308342', '1480308342');
-INSERT INTO `dp_admin_action` VALUES ('41', 'admin', 'packet_uninstall', '卸载数据包', '卸载数据包', '', '[user|get_nickname] 卸载了数据包：[details]', '1', '1480308372', '1480308372');
-INSERT INTO `dp_admin_action` VALUES ('42', 'admin', 'system_config_update', '更新系统设置', '更新系统设置', '', '[user|get_nickname] 更新了系统设置：[details]', '1', '1480309555', '1480309642');
-INSERT INTO `dp_admin_action` VALUES ('43', 'user', 'user_signin', '用户登录', '用户登录', '', '[user|get_nickname] 用户登录 :[details]', '1', '1480309555', '1480309642');
+INSERT INTO `dp_admin_action`
+VALUES ('34', 'admin', 'menu_disable', '禁用节点', '禁用节点', '', '[user|get_nickname] 禁用了节点：[details]', '1',
+        '1480305659', '1480305659');
+INSERT INTO `dp_admin_action`
+VALUES ('35', 'admin', 'module_install', '安装模块', '安装模块', '', '[user|get_nickname] 安装了模块：[details]', '1',
+        '1480307558', '1480307558');
+INSERT INTO `dp_admin_action`
+VALUES ('36', 'admin', 'module_uninstall', '卸载模块', '卸载模块', '', '[user|get_nickname] 卸载了模块：[details]', '1',
+        '1480307588', '1480307588');
+INSERT INTO `dp_admin_action`
+VALUES ('37', 'admin', 'module_enable', '启用模块', '启用模块', '', '[user|get_nickname] 启用了模块：[details]', '1',
+        '1480307618', '1480307618');
+INSERT INTO `dp_admin_action`
+VALUES ('38', 'admin', 'module_disable', '禁用模块', '禁用模块', '', '[user|get_nickname] 禁用了模块：[details]', '1',
+        '1480307653', '1480307653');
+INSERT INTO `dp_admin_action`
+VALUES ('39', 'admin', 'module_export', '导出模块', '导出模块', '', '[user|get_nickname] 导出了模块：[details]', '1',
+        '1480307682', '1480307682');
+INSERT INTO `dp_admin_action`
+VALUES ('40', 'admin', 'packet_install', '安装数据包', '安装数据包', '', '[user|get_nickname] 安装了数据包：[details]',
+        '1', '1480308342', '1480308342');
+INSERT INTO `dp_admin_action`
+VALUES ('41', 'admin', 'packet_uninstall', '卸载数据包', '卸载数据包', '', '[user|get_nickname] 卸载了数据包：[details]',
+        '1', '1480308372', '1480308372');
+INSERT INTO `dp_admin_action`
+VALUES ('42', 'admin', 'system_config_update', '更新系统设置', '更新系统设置', '',
+        '[user|get_nickname] 更新了系统设置：[details]', '1', '1480309555', '1480309642');
+INSERT INTO `dp_admin_action`
+VALUES ('43', 'user', 'user_signin', '用户登录', '用户登录', '', '[user|get_nickname] 用户登录 :[details]', '1',
+        '1480309555', '1480309642');
+INSERT INTO `dp_admin_action`
+VALUES ('44', 'user', 'edit_data', '修改数据', '修改数据', '', '', '1', '1480309555', '1480309642');
 
 -- ----------------------------
 -- Table structure for `dp_admin_attachment`
 -- ----------------------------
 DROP TABLE IF EXISTS `dp_admin_attachment`;
-CREATE TABLE `dp_admin_attachment` (
-                                       `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-                                       `uid`         int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
-                                       `name`        varchar(255) NOT NULL DEFAULT '' COMMENT '文件名',
-                                       `module`      varchar(32)  NOT NULL DEFAULT '' COMMENT '模块名，由哪个模块上传的',
+CREATE TABLE `dp_admin_attachment`
+(
+    `id`                                             int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `uid`                                            int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
+    `name`                                           varchar(255) NOT NULL DEFAULT '' COMMENT '文件名',
+    `module`                                         varchar(32)  NOT NULL DEFAULT '' COMMENT '模块名，由哪个模块上传的',
                                        `path`        varchar(255) NOT NULL DEFAULT '' COMMENT '文件路径',
                                        `thumb`       varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图路径',
                                        `url`         varchar(255) NOT NULL DEFAULT '' COMMENT '文件链接',
